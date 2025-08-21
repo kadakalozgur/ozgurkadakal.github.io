@@ -161,6 +161,11 @@ nav a:hover {
   font-size: 2rem;
 }
 
+.project-gallery a:visited p,
+.project-gallery a:hover p {
+  color: #551a8b; 
+}
+
 .all-btn {
   display: inline-block;
   margin-top: 60px;
@@ -433,3 +438,4 @@ footer {
   .contact-form button { font-size: 0.95rem; }
   .social-icons img { width: 50px; height: 50px; }
 }
+
