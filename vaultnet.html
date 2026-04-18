@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pomodoro App - Özgür Kadakal</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <nav>
+      <a href="index.html">🏠Ana Sayfa</a>
+      <a href="projelerim.html" class="active">🛠️Projelerim</a>
+      <a href="hakkimda.html">🧬Hakkımda</a>
+      <a href="iletisim.html">📧İletişim</a>
+    </nav>
+  </header>
+
+  <!-- Proje Detay -->
+  <section class="project-detail">
+    <div class="detail-container">
+      <div class="detail-image">
+        <img src="images/vaultnet.png" alt="vaultnet">
+      </div>
+      <div class="detail-info">
+        <h1>VaultNet - Güvenli Kasa API</h1>
+        <p>
+          Bu proje C# dilinde .Net Core ile kodlanmış bir Vault API projesidir.
+        </p>
+
+    <ul class="features">
+    <li>🔐 <strong>Kimlik Doğrulama ve Güvenlik</strong></li>
+  <ul>
+    <li>🛡️ JWT Authentication: Token tabanlı güvenli giriş sistemi.</li>
+    <li>🔑 Şifre Hashleme: Şifreler BCrypt ile güvenli şekilde saklanır.</li>
+    <li>🧾 Claim Tabanlı Kimlik: Kullanıcı bilgileri JWT üzerinden yönetilir.</li>
+    <li>🔒 Veri Şifreleme: Hassas veriler AES-256 (Data Protection API) ile şifrelenir.</li>
+  </ul>
+
+  <li>📦 <strong>Kasa Yönetimi</strong></li>
+  <ul>
+    <li>➕ Kayıt Ekleme: Şifre, not vb. hassas verileri saklama.</li>
+    <li>✏️ Güncelleme: Mevcut kayıtları düzenleme.</li>
+    <li>❌ Silme: Yetkili kullanıcı tarafından güvenli silme.</li>
+    <li>📂 Verilerim: Sadece kullanıcıya ait verileri listeleme.</li>
+  </ul>
+
+  <li>👤 <strong>Kullanıcı Sistemi</strong></li>
+  <ul>
+    <li>📝 Kayıt Ol: Yeni kullanıcı oluşturma.</li>
+    <li>🔐 Giriş Yap: JWT token alma.</li>
+    <li>📧 Benzersiz E-posta Kontrolü</li>
+    <li>👁️ Profil Bilgisi: Claim üzerinden kullanıcı bilgisi alma.</li>
+  </ul>
+
+  <li>⚙️ <strong>Backend Mimarisi</strong></li>
+  <ul>
+    <li>🧩 Katmanlı Mimari: Controller → Service → Data katmanı ayrımı.</li>
+    <li>🔄 Dependency Injection</li>
+    <li>🗄️ Entity Framework Core</li>
+    <li>🌐 Global Exception Handling</li>
+    <li>⚡ Async Programlama</li>
+  </ul>
+    </ul>
+
+        <a href="https://github.com/kadakalozgur/VaultNet" target="_blank" class="project-btn">
+          🔗 GitHub’da Görüntüle
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sosyal Medya -->
+  <section class="socials">
+    <div class="social-icons">
+      <a href="https://www.instagram.com/kadakal_ozgur" target="_blank"><img src="images/Instagram.png" alt="Instagram"></a>
+      <a href="https://github.com/kadakalozgur" target="_blank"><img src="images/GitHub.png" alt="GitHub"></a>
+      <a href="mailto:ozgurkreach@gmail.com" target="_blanl"><img src="images/Letter.png" alt="E-posta"></a>
+    </div>
+  </section>
+
+  <footer>
+    <p>© Özgür Kadakal - Tüm Hakları Saklıdır.</p>
+  </footer>
+</body>
+</html>
