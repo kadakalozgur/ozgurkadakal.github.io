@@ -1585,6 +1585,10 @@ html.pref-lang-tr .lang-switch__btn[data-lang="en"] {
     transform: translateX(30px);
   }
 
+  html.pref-lang-en #langSwitch::before {
+    transform: translateX(30px);
+  }
+
   .settings-panel {
     width: 270px;
     right: -10px;
