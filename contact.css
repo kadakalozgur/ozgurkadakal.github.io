@@ -1,0 +1,401 @@
+/* ============================================================
+   İLETİŞİM SAYFASI STİL DOSYASI (contact.html için)
+   Not: Bu dosya style.css'in üzerine eklenir; navbar, footer,
+   tema/dil sistemleri ve fare izi efekti style.css'ten gelir.
+
+   İçindekiler:
+   1. Sayfa Üst Bilgi (Eyebrow / Başlık / Açıklama)
+   2. İletişim Kartları Izgarası
+   3. Tekil İletişim Kartı
+   4. Değer Satırı + Kopyala İkon Butonu (Tooltip Animasyonlu)
+   5. Bağlantıya Git Butonu
+   6. Responsive (Medya Sorguları)
+   7. Açılış Animasyonu (Sıralı Ortaya Çıkış)
+   ============================================================ */
+
+
+/* ============================================================
+   1. SAYFA ÜST BİLGİ
+   ============================================================ */
+.contact-page {
+  position: relative;
+  padding-top: 96px;
+  padding-bottom: 56px;
+}
+
+.contact-page__particles {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  overflow: visible;
+}
+
+.contact-page__inner {
+  position: relative;
+  z-index: 1;
+}
+
+.contact-page__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.contact-page__intro {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 620px;
+  margin-bottom: 56px;
+}
+
+.contact-page__intro .eyebrow {
+  margin-bottom: 16px;
+}
+
+.contact-page__intro .section__title {
+  margin-bottom: 18px;
+}
+
+.contact-page__text {
+  color: var(--text-secondary);
+  font-size: 1.05rem;
+  max-width: 560px;
+}
+
+
+/* ============================================================
+   2. İLETİŞİM KARTLARI IZGARASI
+   ============================================================ */
+.contact-cards {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+}
+
+
+/* ============================================================
+   3. TEKİL İLETİŞİM KARTI
+   ============================================================ */
+.contact-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  background-color: var(--surface);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-lg);
+  padding: 40px 28px 32px;
+  box-shadow: var(--shadow-sm);
+  transition:
+    transform 0.3s ease,
+    box-shadow var(--transition-theme) var(--transition-theme-ease),
+    border-color var(--transition-theme) var(--transition-theme-ease),
+    background-color var(--transition-theme) var(--transition-theme-ease);
+}
+
+.contact-card:hover {
+  transform: translateY(-6px) scale(1.025);
+  box-shadow: var(--shadow-lg), 0 0 0 2px var(--accent-ring);
+  border-color: var(--accent-ring);
+}
+
+.contact-card__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  margin-bottom: 20px;
+  border-radius: 50%;
+  background-color: color-mix(in srgb, var(--accent) 12%, transparent);
+  color: var(--accent);
+  transition:
+    transform 0.3s ease,
+    background-color var(--transition-theme) var(--transition-theme-ease),
+    color var(--transition-theme) var(--transition-theme-ease);
+}
+
+.contact-card__icon svg {
+  width: 30px;
+  height: 30px;
+}
+
+.contact-card:hover .contact-card__icon {
+  transform: scale(1.08) rotate(-4deg);
+}
+
+.contact-card__title {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+
+.contact-card__value {
+  font-family: var(--font-display);
+  font-size: 0.92rem;
+  color: var(--text-muted);
+  word-break: break-word;
+}
+
+
+/* ============================================================
+   4. DEĞER SATIRI + KOPYALA İKON BUTONU (TOOLTIP ANİMASYONLU)
+   ============================================================ */
+.contact-card__value-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 26px;
+}
+
+.copy-icon-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border-radius: 50%;
+  border: 1.5px solid var(--border-strong);
+  background-color: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition:
+    transform 0.15s ease,
+    border-color var(--transition-theme) var(--transition-theme-ease),
+    background-color var(--transition-theme) var(--transition-theme-ease),
+    color var(--transition-theme) var(--transition-theme-ease);
+}
+
+.copy-icon-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.copy-icon-btn:active {
+  transform: scale(0.92);
+}
+
+.copy-icon-btn__icon {
+  width: 14px;
+  height: 14px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 1;
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.18s ease;
+}
+
+.copy-icon-btn__icon--check {
+  width: 15px;
+  height: 15px;
+  color: var(--accent);
+  transform: translate(-50%, -50%) scale(0);
+  opacity: 0;
+}
+
+.copy-icon-btn.is-copied {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.copy-icon-btn.is-copied .copy-icon-btn__icon--copy {
+  transform: translate(-50%, -50%) scale(0);
+  opacity: 0;
+}
+
+.copy-icon-btn.is-copied .copy-icon-btn__icon--check {
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 1;
+}
+
+.copy-icon-btn__tooltip {
+  position: absolute;
+  bottom: calc(100% + 9px);
+  left: 50%;
+  transform: translate(-50%, 4px);
+  background-color: var(--text-primary);
+  color: var(--bg);
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 600;
+  white-space: nowrap;
+  padding: 5px 10px;
+  border-radius: 6px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.18s ease, transform 0.18s ease;
+}
+
+.copy-icon-btn__tooltip::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 4px solid transparent;
+  border-top-color: var(--text-primary);
+}
+
+.copy-icon-btn.is-copied .copy-icon-btn__tooltip {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+.copy-icon-btn:not(.is-copied) .copy-icon-btn__tooltip {
+  opacity: 0 !important;
+}
+
+
+/* ============================================================
+   5. BAĞLANTIYA GİT BUTONU
+   ============================================================ */
+.contact-card__actions {
+  width: 100%;
+  margin-top: auto;
+}
+
+.contact-card__btn--go {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  width: 100%;
+  padding: 10px 16px;
+  border-radius: 999px;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  border: 1.5px solid var(--border-strong);
+  background-color: transparent;
+  transition:
+    transform 0.2s ease,
+    border-color var(--transition-theme) var(--transition-theme-ease),
+    color var(--transition-theme) var(--transition-theme-ease),
+    background-color var(--transition-theme) var(--transition-theme-ease);
+}
+
+.contact-card__btn--go:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background-color: color-mix(in srgb, var(--accent) 8%, transparent);
+}
+
+.contact-card__btn--go:active {
+  transform: scale(0.97);
+}
+
+.contact-card__btn-arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 14px;
+  height: 14px;
+  transition: transform 0.2s ease;
+}
+
+.contact-card__btn-label {
+  white-space: nowrap;
+}
+
+.contact-card__btn-arrow svg {
+  width: 14px;
+  height: 14px;
+}
+
+.contact-card__btn--go:hover .contact-card__btn-arrow {
+  transform: translateX(3px);
+}
+
+
+/* ============================================================
+   6. RESPONSIVE (MEDYA SORGULARI)
+   ============================================================ */
+@media (max-width: 1024px) {
+  .contact-cards {
+    grid-template-columns: 1fr;
+    max-width: 420px;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .contact-page {
+    padding-top: 64px;
+    padding-bottom: 40px;
+  }
+
+  .contact-page__intro {
+    margin-bottom: 40px;
+  }
+
+  .contact-card {
+    padding: 32px 24px 28px;
+  }
+}
+
+
+/* ============================================================
+   7. AÇILIŞ ANİMASYONU (SIRALI ORTAYA ÇIKIŞ)
+   ============================================================ */
+.contact-reveal {
+  opacity: 0;
+}
+
+.contact-page__intro > .contact-reveal {
+  animation: contactRevealDown 0.7s cubic-bezier(0.25, 0.7, 0.35, 1) forwards;
+}
+
+.contact-page__intro > .contact-reveal:nth-child(1) { animation-delay: 0.05s; }
+.contact-page__intro > .contact-reveal:nth-child(2) { animation-delay: 0.2s; }
+.contact-page__intro > .contact-reveal:nth-child(3) { animation-delay: 0.35s; }
+
+.contact-cards > .contact-reveal {
+  animation: contactRevealLeft 0.7s cubic-bezier(0.25, 0.7, 0.35, 1) forwards;
+}
+
+.contact-cards > .contact-reveal:nth-child(1) { animation-delay: 0.5s; }
+.contact-cards > .contact-reveal:nth-child(2) { animation-delay: 0.62s; }
+.contact-cards > .contact-reveal:nth-child(3) { animation-delay: 0.74s; }
+
+@keyframes contactRevealDown {
+  from {
+    opacity: 0;
+    transform: translateY(-22px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes contactRevealLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-26px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .contact-page .contact-reveal {
+    animation-delay: 0s !important;
+  }
+}

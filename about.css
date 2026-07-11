@@ -1,0 +1,780 @@
+/* ============================================================
+   HAKKIMDA SAYFASI STİL DOSYASI (about.html için)
+   Not: Bu dosya style.css'in üzerine eklenir; navbar, footer,
+   tema/dil sistemleri ve fare izi efekti style.css'ten gelir.
+   Fotoğraf çerçevesi (.about__photo-frame), biyografi metni
+   (.about__text) ve bilgi kartı (.about__facts) bileşenleri
+   style.css'te zaten tanımlı olduğundan burada yeniden kullanılır.
+
+   İçindekiler:
+   1. Sayfa Üst Bilgi (Eyebrow)
+   2. Hero Bloğu (Fotoğraf + Tanıtım Metni)
+   3. Bilgi Kartları Izgarası (Bento)
+   3b. Alt İletişim Çubuğu (CTA)
+   4. Yetenekler Bölüm Başlığı
+   5. Yetenek Kategorileri Izgarası
+   6. Tekil Yetenek Kategorisi Kartı + Etiketler
+   7. Responsive (Medya Sorguları)
+   8. Açılış Animasyonu (Sıralı Ortaya Çıkış)
+   ============================================================ */
+
+
+/* ============================================================
+   1. SAYFA ÜST BİLGİ
+   ============================================================ */
+.about-page {
+  padding-top: 96px;
+}
+
+main.main--fit-content {
+  flex-grow: 0;
+}
+
+.about-page__intro {
+  display: flex;
+  margin-bottom: 28px;
+}
+
+
+/* ============================================================
+   2. HERO BLOĞU (FOTOĞRAF + TANITIM METNİ)
+   ============================================================ */
+.about-hero {
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  gap: 48px;
+  align-items: center;
+  margin-bottom: 28px;
+}
+
+.about-hero__media {
+  position: relative;
+}
+
+.about-hero__photo-frame {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--border-strong);
+  box-shadow: var(--shadow-lg);
+  background:
+    linear-gradient(150deg,
+      color-mix(in srgb, var(--accent) 16%, var(--surface)) 0%,
+      color-mix(in srgb, var(--accent-2) 12%, var(--surface)) 100%);
+  transition:
+    box-shadow var(--transition-theme) var(--transition-theme-ease),
+    border-color var(--transition-theme) var(--transition-theme-ease);
+}
+
+.about-hero__photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.about-hero__content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.about-hero__greeting {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--accent);
+  margin-bottom: 12px;
+}
+
+.about-hero__title {
+  margin-bottom: 20px;
+}
+
+.about-hero__text {
+  color: var(--text-secondary);
+  font-size: 1.08rem;
+  line-height: 1.65;
+  max-width: 520px;
+  margin-bottom: 32px;
+}
+
+.about-hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.about-hero__actions .btn svg {
+  width: 17px;
+  height: 17px;
+}
+
+
+/* ============================================================
+   3. BİLGİ KARTLARI IZGARASI (BENTO)
+   ============================================================ */
+.about-bento {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+  margin-top: 40px;
+  margin-bottom: 24px;
+}
+
+.about-bento__card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--surface);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-lg);
+  padding: 22px 24px 20px;
+  box-shadow: var(--shadow-sm);
+  transition:
+    transform 0.3s ease,
+    box-shadow var(--transition-theme) var(--transition-theme-ease),
+    border-color var(--transition-theme) var(--transition-theme-ease),
+    background-color var(--transition-theme) var(--transition-theme-ease);
+}
+
+.about-bento__card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--accent-ring);
+}
+
+.about-bento__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  margin-bottom: 14px;
+  border-radius: var(--radius-md);
+  background-color: color-mix(in srgb, var(--card-accent, var(--accent)) 13%, transparent);
+  color: var(--card-accent, var(--accent));
+  transition:
+    background-color var(--transition-theme) var(--transition-theme-ease),
+    color var(--transition-theme) var(--transition-theme-ease);
+}
+
+.about-bento__icon svg {
+  width: 19px;
+  height: 19px;
+}
+
+.about-bento__title {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 10px;
+}
+
+.about-bento__main {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.4;
+  margin-bottom: 4px;
+}
+
+.about-bento__sub {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 18px;
+}
+
+.about-bento__meta {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: auto;
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.about-bento__meta svg {
+  flex-shrink: 0;
+  width: 15px;
+  height: 15px;
+  color: var(--accent);
+}
+
+.about-bento__list {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex-grow: 1;
+  gap: 8px;
+}
+
+.about-bento__list li {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.about-bento__list li:not(:last-child) {
+  padding-bottom: 8px;
+  border-bottom: 1px dashed var(--border);
+}
+
+.about-bento__list-label {
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.about-bento__interests {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px 8px;
+  flex-grow: 1;
+  align-content: center;
+}
+
+.about-bento__interest-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 6px;
+}
+
+.about-bento__interest-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background-color: color-mix(in srgb, var(--card-accent, var(--accent)) 14%, transparent);
+  color: var(--card-accent, var(--accent));
+  transition:
+    transform 0.25s ease,
+    background-color var(--transition-theme) var(--transition-theme-ease),
+    color var(--transition-theme) var(--transition-theme-ease);
+}
+
+.about-bento__interest-icon svg {
+  width: 16px;
+  height: 16px;
+}
+
+.about-bento__interest-item:hover .about-bento__interest-icon {
+  transform: translateY(-3px) scale(1.06);
+}
+
+.about-bento__interest-item span:last-child {
+  font-family: var(--font-body);
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  line-height: 1.3;
+}
+
+
+/* ============================================================
+   3b. ALT İLETİŞİM ÇUBUĞU (CTA)
+   ============================================================ */
+.about-cta {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
+  background:
+    linear-gradient(120deg,
+      color-mix(in srgb, var(--accent) 12%, var(--surface)) 0%,
+      color-mix(in srgb, var(--accent-2) 10%, var(--surface)) 50%,
+      color-mix(in srgb, var(--accent) 14%, var(--surface)) 100%);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-lg);
+  padding: 30px 34px;
+  margin-bottom: 72px;
+  box-shadow: var(--shadow-sm);
+  transition:
+    box-shadow var(--transition-theme) var(--transition-theme-ease),
+    border-color var(--transition-theme) var(--transition-theme-ease),
+    background-color var(--transition-theme) var(--transition-theme-ease);
+}
+
+.about-cta__text {
+  min-width: 0;
+}
+
+.about-cta__title {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.4;
+  margin-bottom: 6px;
+}
+
+.about-cta__desc {
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+  color: var(--text-secondary);
+}
+
+.about-cta__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+  background-color: var(--accent);
+  color: var(--accent-contrast);
+  border: 1px solid transparent;
+  border-radius: 999px;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.92rem;
+  padding: 13px 24px;
+  box-shadow: var(--shadow-sm);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    background-color var(--transition-theme) var(--transition-theme-ease);
+}
+
+.about-cta__btn svg {
+  width: 17px;
+  height: 17px;
+  transition: transform 0.2s ease;
+}
+
+.about-cta__btn:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-btn-hover);
+}
+
+.about-cta__btn:hover svg {
+  transform: translateX(3px);
+}
+
+
+/* ============================================================
+   4. YETENEKLER BÖLÜM BAŞLIĞI
+   ============================================================ */
+.about-page__skills-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto 48px;
+}
+
+.about-page__skills-header .eyebrow {
+  margin-bottom: 16px;
+}
+
+.about-page__skills-header .section__title {
+  margin-bottom: 16px;
+}
+
+.about-page__skills-header p {
+  color: var(--text-secondary);
+  font-size: 1.02rem;
+}
+
+
+/* ============================================================
+   5. YETENEK KATEGORİLERİ IZGARASI
+   ============================================================ */
+.skills-categories {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 22px;
+}
+
+
+/* ============================================================
+   6. TEKİL YETENEK KATEGORİSİ KARTI + LİSTE ÖĞELERİ
+   ============================================================ */
+.skill-category {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--surface);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-lg);
+  padding: 24px 22px 22px;
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  transition:
+    transform 0.3s ease,
+    box-shadow var(--transition-theme) var(--transition-theme-ease),
+    background-color var(--transition-theme) var(--transition-theme-ease);
+}
+
+.skill-category::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 3px;
+  background-color: var(--card-accent, var(--accent));
+}
+
+.skill-category:nth-child(1) { --card-accent: #3b82f6; }
+.skill-category:nth-child(2) { --card-accent: #22c55e; }
+.skill-category:nth-child(3) { --card-accent: #f59e0b; }
+.skill-category:nth-child(4) { --card-accent: #a855f7; }
+.skill-category:nth-child(5) { --card-accent: #ec4899; }
+.skill-category:nth-child(6) { --card-accent: #3b82f6; }
+.skill-category:nth-child(7) { --card-accent: #22c55e; }
+.skill-category:nth-child(8) { --card-accent: #a855f7; }
+
+.skill-category:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-lg);
+}
+
+.skill-category__header {
+  display: flex;
+  align-items: flex-start;
+  gap: 13px;
+  margin-bottom: 20px;
+  /* Başlık + açıklama alanı her kartta sabit yükseklikte tutulur,
+     böylece metin satır sayısı (1 veya 2 satır) ne olursa olsun
+     altındaki beceri listeleri aynı hizadan başlar. */
+  min-height: 78px;
+}
+
+.skill-category__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-md);
+  background-color: color-mix(in srgb, var(--card-accent, var(--accent)) 16%, transparent);
+  color: var(--card-accent, var(--accent));
+}
+
+.skill-category__icon svg {
+  width: 20px;
+  height: 20px;
+}
+
+.skill-category__title-group {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+  min-width: 0;
+  /* header ile aynı sabit yükseklik; metin az olsa da kutu küçülmez */
+  min-height: 78px;
+}
+
+.skill-category__title {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.3;
+  /* en fazla 2 satır göster, taşarsa "..." ile kes */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.skill-category__subtitle {
+  font-family: var(--font-body);
+  font-size: 0.74rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  line-height: 1.4;
+  /* her zaman 2 satırlık alan rezerve edilir: metin kısa olsa
+     boşluk kalır, uzun olsa "..." ile 2 satırda kesilir */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  min-height: calc(0.74rem * 1.4 * 2);
+}
+
+.skill-category__list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.skill-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 12px;
+  background-color: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  transition:
+    transform 0.2s ease,
+    border-color var(--transition-theme) var(--transition-theme-ease),
+    background-color var(--transition-theme) var(--transition-theme-ease),
+    color var(--transition-theme) var(--transition-theme-ease);
+}
+
+.skill-row:hover {
+  transform: translateX(3px);
+  border-color: var(--accent-ring);
+  color: var(--text-primary);
+}
+
+.skill-row__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background-color: var(--surface-3);
+  font-family: var(--font-display);
+  font-size: 0.56rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+.skill-row__icon--svg {
+  background-color: transparent;
+}
+
+.skill-row__icon--svg svg {
+  width: 20px;
+  height: 20px;
+}
+
+.skill-row__name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+
+/* ============================================================
+   6b. TEKNOLOJİ MARKA RENKLERİ (İKON ARKA PLANLARI)
+   ============================================================ */
+.skill-row__icon--sql      { background-color: #CC2927; color: #ffffff; }
+.skill-row__icon--claude   { background-color: #DA7756; color: #ffffff; }
+.skill-row__icon--gemini   { background-color: #4285F4; color: #ffffff; }
+.skill-row__icon--openai   { background-color: #10A37F; color: #ffffff; }
+.skill-row__icon--restapi  { background-color: #1f2937; color: #ffffff; }
+.skill-row__icon--ssms     { background-color: #CC2927; color: #ffffff; font-size: 0.42rem; }
+.skill-row__icon--html5    { background-color: #E44D26; color: #ffffff; }
+.skill-row__icon--css3     { background-color: #1572B6; color: #ffffff; }
+.skill-row__icon--bootstrap{ background-color: #7952B3; color: #ffffff; }
+.skill-row__icon--git      { background-color: #F05032; color: #ffffff; }
+.skill-row__icon--github   { background-color: #181717; color: #ffffff; }
+.skill-row__icon--postman  { background-color: #FF6C37; color: #ffffff; }
+.skill-row__icon--docker   { background-color: #2496ED; color: #ffffff; }
+.skill-row__icon--figma    { background-color: var(--surface-3); }
+.skill-row__icon--postgresql{ background-color: #336791; color: #ffffff; }
+
+
+/* ============================================================
+   7. RESPONSIVE (MEDYA SORGULARI)
+   ============================================================ */
+@media (max-width: 1180px) {
+  .about-hero {
+    grid-template-columns: 300px 1fr;
+    gap: 36px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .skills-categories {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 960px) {
+  .about-hero {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    text-align: center;
+    gap: 44px;
+    margin-bottom: 36px;
+  }
+
+  .about-hero__media {
+    max-width: 300px;
+    width: 100%;
+  }
+
+  .about-hero__content {
+    align-items: center;
+  }
+
+  .about-hero__text {
+    max-width: 560px;
+  }
+
+  .about-hero__actions {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 1280px) and (min-width: 1025px) {
+  .skills-categories {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .about-page {
+    padding-top: 64px;
+  }
+
+  .about-page__intro {
+    margin-bottom: 24px;
+  }
+
+  .about-bento {
+    margin-top: 32px;
+  }
+
+  .about-cta {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 24px;
+    margin-bottom: 48px;
+  }
+
+  .about-cta__btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .about-page__skills-header {
+    margin-bottom: 36px;
+  }
+
+  .skills-categories {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .about-bento {
+    grid-template-columns: 1fr;
+  }
+
+  .about-bento__interests {
+    gap: 18px;
+  }
+}
+
+@media (max-width: 520px) {
+  .about-hero__actions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .about-hero__actions .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .about-hero__photo-frame {
+    aspect-ratio: 1 / 1;
+  }
+}
+
+
+/* ============================================================
+   8. AÇILIŞ ANİMASYONU (SIRALI ORTAYA ÇIKIŞ)
+   ============================================================ */
+.about-reveal {
+  opacity: 0;
+}
+
+.about-page__intro > .about-reveal {
+  animation: aboutRevealDown 0.7s cubic-bezier(0.25, 0.7, 0.35, 1) forwards;
+  animation-delay: 0.05s;
+}
+
+.about-hero > .about-reveal {
+  animation: aboutRevealUp 0.7s cubic-bezier(0.25, 0.7, 0.35, 1) forwards;
+}
+
+.about-hero > .about-reveal:nth-child(1) { animation-delay: 0.2s; }
+.about-hero > .about-reveal:nth-child(2) { animation-delay: 0.34s; }
+
+.about-bento > .about-reveal {
+  animation: aboutRevealUp 0.65s cubic-bezier(0.25, 0.7, 0.35, 1) forwards;
+}
+
+.about-bento > .about-reveal:nth-child(1) { animation-delay: 0.46s; }
+.about-bento > .about-reveal:nth-child(2) { animation-delay: 0.56s; }
+.about-bento > .about-reveal:nth-child(3) { animation-delay: 0.66s; }
+
+.about-cta.about-reveal {
+  animation: aboutRevealUp 0.65s cubic-bezier(0.25, 0.7, 0.35, 1) forwards;
+  animation-delay: 0.78s;
+}
+
+.skills-categories > .about-reveal {
+  animation: aboutRevealUp 0.6s cubic-bezier(0.25, 0.7, 0.35, 1) forwards;
+}
+
+.skills-categories > .about-reveal:nth-child(1) { animation-delay: 0.15s; }
+.skills-categories > .about-reveal:nth-child(2) { animation-delay: 0.23s; }
+.skills-categories > .about-reveal:nth-child(3) { animation-delay: 0.31s; }
+.skills-categories > .about-reveal:nth-child(4) { animation-delay: 0.39s; }
+.skills-categories > .about-reveal:nth-child(5) { animation-delay: 0.47s; }
+.skills-categories > .about-reveal:nth-child(6) { animation-delay: 0.55s; }
+.skills-categories > .about-reveal:nth-child(7) { animation-delay: 0.63s; }
+.skills-categories > .about-reveal:nth-child(8) { animation-delay: 0.71s; }
+
+@keyframes aboutRevealDown {
+  from {
+    opacity: 0;
+    transform: translateY(-22px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes aboutRevealUp {
+  from {
+    opacity: 0;
+    transform: translateY(26px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .about-page .about-reveal {
+    animation-delay: 0s !important;
+  }
+}

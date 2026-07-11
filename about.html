@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hakkımda — Özgür Kadakal</title>
+
+  <script>
+    (function () {
+      var root = document.documentElement;
+
+      if ('scrollRestoration' in history) {
+        history.scrollRestoration = 'manual';
+      }
+      window.scrollTo(0, 0);
+
+      try {
+        var theme = localStorage.getItem('portfolio-theme');
+        if (!theme) {
+          theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+        if (theme === 'dark') {
+          root.setAttribute('data-theme', 'dark');
+        }
+      } catch (e) {}
+
+      try {
+        var lang = localStorage.getItem('portfolio-lang');
+        if (!lang) {
+          var browserLang = (navigator.language || 'tr').slice(0, 2);
+          lang = browserLang === 'en' ? 'en' : 'tr';
+        }
+        if (lang !== 'tr') {
+          root.classList.add('lang-not-ready');
+        }
+        root.classList.add('pref-lang-' + lang);
+      } catch (e) {}
+    })();
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="about.css" />
+</head>
+<body>
+
+  <canvas class="cursor-trail-canvas" id="cursorTrailCanvas" aria-hidden="true"></canvas>
+
+  <header class="navbar" id="navbar">
+    <div class="navbar__inner">
+
+      <a href="index.html" class="navbar__logo">
+        <span class="navbar__logo-bracket">&lt;</span>
+        <span data-i18n="navLogo">Özgür Kadakal</span>
+        <span class="navbar__logo-bracket">/&gt;</span>
+      </a>
+
+      <nav class="navbar__links" id="navLinks">
+        <a href="index.html" data-i18n="navHome">Ana Sayfa</a>
+        <a href="projects.html" data-i18n="navProjects">Projeler</a>
+        <a href="about.html" data-i18n="navAbout">Hakkımda</a>
+        <a href="contact.html" data-i18n="navContact">İletişim</a>
+      </nav>
+
+      <div class="navbar__actions">
+
+        <div class="lang-switch" id="langSwitch" role="group" aria-label="Dil seçimi">
+          <button class="lang-switch__btn" data-lang="tr" aria-label="Türkçe" title="Türkçe">
+            <svg viewBox="0 0 32 32" class="flag-icon" aria-hidden="true">
+              <rect width="32" height="32" rx="4" fill="#E30A17"/>
+              <circle cx="13" cy="16" r="6.2" fill="#fff"/>
+              <circle cx="14.6" cy="16" r="5" fill="#E30A17"/>
+              <polygon fill="#fff" points="20.5,16 23.8,17.1 21.7,14.3 21.7,17.7 23.8,14.9"/>
+            </svg>
+          </button>
+          <button class="lang-switch__btn" data-lang="en" aria-label="English" title="English">
+            <svg viewBox="0 0 32 32" class="flag-icon" aria-hidden="true">
+              <rect width="32" height="32" rx="4" fill="#012169"/>
+              <path d="M0 0 L32 32 M32 0 L0 32" stroke="#fff" stroke-width="4"/>
+              <path d="M0 0 L32 32 M32 0 L0 32" stroke="#C8102E" stroke-width="2"/>
+              <path d="M16 0 V32 M0 16 H32" stroke="#fff" stroke-width="6"/>
+              <path d="M16 0 V32 M0 16 H32" stroke="#C8102E" stroke-width="3.2"/>
+            </svg>
+          </button>
+        </div>
+
+        <button class="theme-toggle" id="themeToggle" data-i18n-title="themeToggleTitle" aria-label="Temayı değiştir" title="Tema">
+          <svg class="theme-toggle__icon theme-toggle__icon--sun" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <circle cx="12" cy="12" r="4.2" stroke="currentColor" stroke-width="1.8"/>
+            <g stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+              <line x1="12" y1="1.5" x2="12" y2="4"/>
+              <line x1="12" y1="20" x2="12" y2="22.5"/>
+              <line x1="1.5" y1="12" x2="4" y2="12"/>
+              <line x1="20" y1="12" x2="22.5" y2="12"/>
+              <line x1="4.4" y1="4.4" x2="6.1" y2="6.1"/>
+              <line x1="17.9" y1="17.9" x2="19.6" y2="19.6"/>
+              <line x1="4.4" y1="19.6" x2="6.1" y2="17.9"/>
+              <line x1="17.9" y1="6.1" x2="19.6" y2="4.4"/>
+            </g>
+          </svg>
+          <svg class="theme-toggle__icon theme-toggle__icon--moon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+          </svg>
+        </button>
+
+        <div class="settings-menu" id="settingsMenu">
+          <button class="settings-toggle" id="settingsToggle" data-i18n-title="settingsToggleTitle" aria-label="Ayarlar" aria-expanded="false" title="Ayarlar">
+            <svg class="settings-toggle__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Z" stroke="currentColor" stroke-width="1.8"/>
+              <path d="M19.4 13.5c.04-.49.04-.99 0-1.5l1.7-1.32a.6.6 0 0 0 .14-.77l-1.6-2.78a.6.6 0 0 0-.73-.27l-2 .8a7.6 7.6 0 0 0-1.3-.75l-.3-2.13a.6.6 0 0 0-.6-.5h-3.2a.6.6 0 0 0-.6.5l-.3 2.13c-.47.2-.9.45-1.3.75l-2-.8a.6.6 0 0 0-.73.27l-1.6 2.78a.6.6 0 0 0 .14.77l1.7 1.32c-.04.5-.04 1 0 1.5l-1.7 1.32a.6.6 0 0 0-.14.77l1.6 2.78a.6.6 0 0 0 .73.27l2-.8c.4.3.83.55 1.3.75l.3 2.13a.6.6 0 0 0 .6.5h3.2a.6.6 0 0 0 .6-.5l.3-2.13c.47-.2.9-.45 1.3-.75l2 .8a.6.6 0 0 0 .73-.27l1.6-2.78a.6.6 0 0 0-.14-.77l-1.7-1.32Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+            </svg>
+          </button>
+
+          <div class="settings-panel" id="settingsPanel" role="menu">
+            <div class="settings-panel__item settings-panel__item--stacked">
+              <div class="settings-panel__item-text">
+                <span class="settings-panel__item-title" data-i18n="settingsCursorTrail">Fare İzi Efekti</span>
+                <span class="settings-panel__item-desc" data-i18n="settingsCursorTrailDesc">İmlecin arkasındaki efekti seç</span>
+              </div>
+              <div class="trail-options" id="cursorTrailOptions" role="radiogroup" aria-label="Fare izi efekti seçimi">
+                <button type="button" class="trail-options__btn" data-trail-mode="off" role="radio" aria-checked="true" data-i18n="trailModeOff">
+                  Kapalı
+                </button>
+                <button type="button" class="trail-options__btn" data-trail-mode="dots" role="radio" aria-checked="false" data-i18n="trailModeDots">
+                  Nokta İzi
+                </button>
+                <button type="button" class="trail-options__btn" data-trail-mode="line" role="radio" aria-checked="false" data-i18n="trailModeLine">
+                  Çizgi İzi
+                </button>
+              </div>
+            </div>
+            <div class="settings-panel__item settings-panel__item--stacked">
+              <div class="settings-panel__item-text">
+                <span class="settings-panel__item-title" data-i18n="settingsBgAnim">Arka Plan Animasyonu</span>
+                <span class="settings-panel__item-desc" data-i18n="settingsBgAnimDesc">Hareketli arka planı aç veya kapat</span>
+              </div>
+              <button
+                type="button"
+                class="bg-anim-toggle"
+                id="bgAnimToggle"
+                role="switch"
+                aria-checked="true"
+                aria-label="Arka plan animasyonu"
+              >
+                <span class="bg-anim-toggle__track">
+                  <span class="bg-anim-toggle__thumb"></span>
+                </span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <button class="navbar__burger" id="burgerBtn" aria-label="Menüyü aç/kapat" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="main--fit-content">
+
+    <section class="section about-page" id="about">
+      <div class="section__inner">
+
+        <div class="about-page__intro">
+          <span class="eyebrow about-reveal" data-i18n="aboutPageEyebrow">// Hakkımda</span>
+        </div>
+
+        <div class="about-hero">
+
+          <div class="about-hero__media about-reveal">
+            <div class="about-hero__photo-frame">
+              <img src="images/pp.jpg" alt="Özgür Kadakal" class="about-hero__photo" />
+            </div>
+          </div>
+
+          <div class="about-hero__content about-reveal">
+            <span class="about-hero__greeting" data-i18n="aboutPageGreeting">Merhaba! 👋</span>
+            <h1 class="section__title about-hero__title" data-i18n="aboutPageTitle">Ben Özgür</h1>
+            <p class="about-hero__text" data-i18n="aboutPageIntro">
+              Yazılım mühendisliği öğrencisiyim; backend sistemleri, oyun geliştirme
+              ve temiz kod prensipleri üzerine çalışıyor, her projede yeni bir şeyler
+              öğrenmeye çalışıyorum.
+            </p>
+          </div>
+
+        </div>
+
+        <div class="about-bento">
+
+          <div class="about-bento__card about-reveal">
+            <div class="about-bento__icon" style="--card-accent: #3b82f6;">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M12 3 2 8l10 5 10-5-10-5Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+                <path d="M6 11v5c0 1.5 2.7 3 6 3s6-1.5 6-3v-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M21 9.5V16" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <h3 class="about-bento__title" data-i18n="aboutFact1Label">Eğitim</h3>
+            <p class="about-bento__main" data-i18n="aboutFact1Value">Yazılım Mühendisliği, 3. Sınıf Öğrencisi</p>
+            <div class="about-bento__meta">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <rect x="3.5" y="5" width="17" height="15" rx="2" stroke="currentColor" stroke-width="1.6"/>
+                <path d="M3.5 9.5h17M8 3v3M16 3v3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+              </svg>
+              <span data-i18n="aboutInfoEduDate">2022 – Devam Ediyor</span>
+            </div>
+          </div>
+
+          <div class="about-bento__card about-reveal">
+            <div class="about-bento__icon" style="--card-accent: #8b5cf6;">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <circle cx="12" cy="8" r="3.4" stroke="currentColor" stroke-width="1.8"/>
+                <path d="M5 20c1-4 4-6 7-6s6 2 7 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <h3 class="about-bento__title" data-i18n="aboutInfoPersonalTitle">Kişisel Bilgiler</h3>
+            <ul class="about-bento__list">
+              <li>
+                <span class="about-bento__list-label" data-i18n="aboutInfoNameLabel">Ad Soyad</span>
+                <span data-i18n="aboutInfoNameValue">Özgür Kadakal</span>
+              </li>
+              <li>
+                <span class="about-bento__list-label" data-i18n="aboutInfoAgeLabel">Yaş</span>
+                <span data-i18n="aboutInfoAgeValue">19</span>
+              </li>
+              <li>
+                <span class="about-bento__list-label" data-i18n="aboutInfoLocationLabel">Konum</span>
+                <span data-i18n="aboutInfoLocationValue">Erzurum, Türkiye</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="about-bento__card about-reveal">
+            <div class="about-bento__icon" style="--card-accent: #ec4899;">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <h3 class="about-bento__title" data-i18n="aboutInterestsTitle">İlgi Alanlarım</h3>
+            <div class="about-bento__interests">
+              <div class="about-bento__interest-item">
+                <span class="about-bento__interest-icon" style="--card-accent: #0ea5e9;">
+                  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M21 16v-2l-8-5V3.5C13 2.67 12.33 2 11.5 2S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2.5 1.5V22l4-1 4 1v-1.5L13 19v-5.5l8 2.5Z"/>
+                  </svg>
+                </span>
+                <span data-i18n="aboutInterest1">Seyahat Etmek</span>
+              </div>
+              <div class="about-bento__interest-item">
+                <span class="about-bento__interest-icon" style="--card-accent: #f43f5e;">
+                  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path d="M9 18V5l10-2v12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                    <circle cx="6.5" cy="18" r="2.5" stroke="currentColor" stroke-width="1.6"/>
+                    <circle cx="16.5" cy="15" r="2.5" stroke="currentColor" stroke-width="1.6"/>
+                  </svg>
+                </span>
+                <span data-i18n="aboutInterest2">Müzik Dinlemek</span>
+              </div>
+              <div class="about-bento__interest-item">
+                <span class="about-bento__interest-icon" style="--card-accent: #8b5cf6;">
+                  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <rect x="2.5" y="7.5" width="19" height="10" rx="5" stroke="currentColor" stroke-width="1.6"/>
+                    <path d="M7 10.2v4M5 12.2h4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+                    <circle cx="15.5" cy="10.7" r="1" fill="currentColor"/>
+                    <circle cx="17.8" cy="13" r="1" fill="currentColor"/>
+                  </svg>
+                </span>
+                <span data-i18n="aboutInterest3">Oyun Oynamak</span>
+              </div>
+              <div class="about-bento__interest-item">
+                <span class="about-bento__interest-icon" style="--card-accent: #22c55e;">
+                  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path d="M2.7 16c0-1.1.7-2.1 1.8-2.4l3.4-1 3.1-2.8c.6-.6 1.5-.8 2.3-.5l4.6 1.7c1.3.5 2.1 1.7 2.1 3.1v1.4c0 1.1-.9 2-2 2H4.2c-.8 0-1.5-.7-1.5-1.5Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+                    <path d="M7.4 13c.9.7 2.1 1 3.6.6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+                    <path d="M2.7 16.3h18" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+                  </svg>
+                </span>
+                <span data-i18n="aboutInterest4">Yürüyüş Yapmak</span>
+              </div>
+              <div class="about-bento__interest-item">
+                <span class="about-bento__interest-icon" style="--card-accent: #f59e0b;">
+                  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <rect x="3" y="6" width="18" height="13" rx="2" stroke="currentColor" stroke-width="1.6"/>
+                    <path d="M3 10h18" stroke="currentColor" stroke-width="1.6"/>
+                    <path d="M7 6v4M12 6v4M17 6v4" stroke="currentColor" stroke-width="1.6"/>
+                  </svg>
+                </span>
+                <span data-i18n="aboutInterest5">Film İzlemek</span>
+              </div>
+              <div class="about-bento__interest-item">
+                <span class="about-bento__interest-icon" style="--card-accent: #b45309;">
+                  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <rect x="4" y="10.5" width="16" height="9.5" rx="1.4" stroke="currentColor" stroke-width="1.6"/>
+                    <path d="M8 10.5v-2M12 10.5v-2M16 10.5v-2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+                    <circle cx="8" cy="6.8" r="1.2" fill="currentColor"/>
+                    <circle cx="12" cy="6.8" r="1.2" fill="currentColor"/>
+                    <circle cx="16" cy="6.8" r="1.2" fill="currentColor"/>
+                  </svg>
+                </span>
+                <span data-i18n="aboutInterest6">Maket Yapma</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="about-cta about-reveal">
+          <div class="about-cta__text">
+            <p class="about-cta__title" data-i18n="aboutCtaTitle">Birlikte güzel işler ortaya çıkarabiliriz!</p>
+            <p class="about-cta__desc" data-i18n="aboutCtaText">Benimle iletişime geçmekten çekinmeyin.</p>
+          </div>
+          <a href="contact.html" class="about-cta__btn">
+            <span data-i18n="aboutCtaBtn">İletişime Geç</span>
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M9 5l7 7-7 7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </div>
+
+        <div class="about-page__skills-header">
+
+          <span class="eyebrow" data-i18n="skillsEyebrow">// Yeteneklerim</span>
+          <h2 class="section__title" data-i18n="skillsTitle">Teknik Beceriler</h2>
+          <p data-i18n="skillsSubtitle">
+            Üzerinde çalıştığım projelerde sıkça kullandığım diller, teknolojiler
+            ve araçlar.
+          </p>
+        </div>
+
+        <div class="skills-categories">
+
+          <div class="skill-category about-reveal">
+            <div class="skill-category__header">
+              <div class="skill-category__icon">
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M9 7L4 12L9 17M15 7L20 12L15 17" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div class="skill-category__title-group">
+                <h3 class="skill-category__title" data-i18n="skillCatLanguages">Programlama Dilleri</h3>
+                <p class="skill-category__subtitle" data-i18n="skillCatLanguagesDesc">Yazılım geliştirmede kullandığım programlama dilleri</p>
+              </div>
+            </div>
+            <div class="skill-category__list">
+              <span class="skill-row"><span class="skill-row__icon skill-row__icon--svg skill-row__icon--c"><svg viewBox="0 0 128 128" aria-hidden="true"><path fill="#a9bacd" d="M125 50c-4-32-24-50-62-50C29 0 3 24 3 64c0 39 24 64 64 64 32 0 55-19 58-50H87c-2 11-8 20-20 20-21 0-24-16-24-33 0-23 8-35 22-35 13 0 20 7 22 20z"/></svg></span><span class="skill-row__name">C</span></span>
+              <span class="skill-row"><span class="skill-row__icon skill-row__icon--svg skill-row__icon--cpp"><svg viewBox="0 0 128 128" aria-hidden="true"><path fill="#00599c" d="M118.766 95.82c.89-1.543 1.441-3.28 1.441-4.843V36.78c0-1.558-.55-3.297-1.441-4.84l-55.32 31.94Zm0 0"/><path fill="#004482" d="m68.36 126.586 46.933-27.094c1.352-.781 2.582-2.129 3.473-3.672l-55.32-31.94L8.12 95.82c.89 1.543 2.121 2.89 3.473 3.672l46.933 27.094c2.703 1.562 7.13 1.562 9.832 0Zm0 0"/><path fill="#659ad2" d="M118.766 31.941c-.891-1.546-2.121-2.894-3.473-3.671L68.359 1.172c-2.703-1.563-7.129-1.563-9.832 0L11.594 28.27C8.89 29.828 6.68 33.66 6.68 36.78v54.196c0 1.562.55 3.3 1.441 4.843L63.445 63.88Zm0 0"/><path fill="#fff" d="M63.445 26.035c-20.867 0-37.843 16.977-37.843 37.844s16.976 37.844 37.843 37.844c13.465 0 26.024-7.247 32.77-18.91L79.84 73.335c-3.38 5.84-9.66 9.465-16.395 9.465-10.433 0-18.922-8.488-18.922-18.922 0-10.434 8.49-18.922 18.922-18.922 6.73 0 13.017 3.629 16.39 9.465l16.38-9.477c-6.75-11.664-19.305-18.91-32.77-18.91zM92.88 57.57v4.207h-4.207v4.203h4.207v4.207h4.203V65.98h4.203v-4.203h-4.203V57.57H92.88zm15.766 0v4.207h-4.204v4.203h4.204v4.207h4.207V65.98h4.203v-4.203h-4.203V57.57h-4.207z"/></svg></span><span class="skill-row__name">C++</span></span>
+              <span class="skill-row"><span class="skill-row__icon skill-row__icon--svg skill-row__icon--csharp"><svg viewBox="0 0 128 128" aria-hidden="true"><path fill="#9B4F96" d="M115.4 30.7L67.1 2.9c-.8-.5-1.9-.7-3.1-.7-1.2 0-2.3.3-3.1.7l-48 27.9c-1.7 1-2.9 3.5-2.9 5.4v55.7c0 1.1.2 2.4 1 3.5l106.8-62c-.6-1.2-1.5-2.1-2.4-2.7z"/><path fill="#68217A" d="M10.7 95.3c.5.8 1.2 1.5 1.9 1.9l48.2 27.9c.8.5 1.9.7 3.1.7 1.2 0 2.3-.3 3.1-.7l48-27.9c1.7-1 2.9-3.5 2.9-5.4V36.1c0-.9-.1-1.9-.6-2.8l-106.6 62z"/><path fill="#fff" d="M85.3 76.1C81.1 83.5 73.1 88.5 64 88.5c-13.5 0-24.5-11-24.5-24.5s11-24.5 24.5-24.5c9.1 0 17.1 5 21.3 12.5l13-7.5c-6.8-11.9-19.6-20-34.3-20-21.8 0-39.5 17.7-39.5 39.5s17.7 39.5 39.5 39.5c14.6 0 27.4-8 34.2-19.8l-12.9-7.6zM97 66.2l.9-4.3h-4.2v-4.7h5.1L100 51h4.9l-1.2 6.1h3.8l1.2-6.1h4.8l-1.2 6.1h2.4v4.7h-3.3l-.9 4.3h4.2v4.7h-5.1l-1.2 6h-4.9l1.2-6h-3.8l-1.2 6h-4.8l1.2-6h-2.4v-4.7H97zm4.8 0h3.8l.9-4.3h-3.8l-.9 4.3z"/></svg></span><span class="skill-row__name">C#</span></span>
+            </div>
+          </div>
+
+          <div class="skill-category about-reveal">
+            <div class="skill-category__header">
+              <div class="skill-category__icon">
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <rect x="3.5" y="4" width="17" height="13" rx="2" stroke="currentColor" stroke-width="1.8"/>
+                  <path d="M8 20.5h8M12 17v3.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <div class="skill-category__title-group">
+                <h3 class="skill-category__title" data-i18n="skillCatBackend">Backend Teknolojileri</h3>
+                <p class="skill-category__subtitle" data-i18n="skillCatBackendDesc">Sunucu tarafında geliştirmede kullandığım teknolojiler</p>
+              </div>
+            </div>
+            <div class="skill-category__list">
+              <span class="skill-row"><span class="skill-row__icon skill-row__icon--svg skill-row__icon--aspnet"><svg viewBox="0 0 128 128" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" fill="#1384C8" d="M82.108 78.432c.479-1.232 1.022-2.445 1.427-3.701 2.288-7.097 4.554-14.2 6.805-21.309.865-2.731 1.813-5.42 3.515-7.767 2.692-3.709 6.442-5.652 10.88-6.331a37.456 37.456 0 015.28-.406c5.267-.05 10.536-.015 15.804-.01.28 0 .56.029.957.052-.129.304-.199.525-.311.724-1.955 3.494-3.872 7.009-5.885 10.468-3.505 6.022-7.016 12.042-10.631 17.998-2.319 3.819-4.834 7.52-7.687 10.974-2.105 2.548-4.321 4.984-7.146 6.77-1.925 1.217-3.981 1.929-6.315 1.917-8.278-.045-16.556-.012-24.834-.024-2.461-.004-4.568-.941-6.356-2.603-2.563-2.381-4.093-5.412-5.345-8.608-2.284-5.835-3.563-11.951-5.031-18.014-.688-2.838-1.47-5.654-2.215-8.478-.048-.183-.142-.354-.25-.617l-.577.542c-3.228 3.207-6.071 6.741-8.615 10.498-.693 1.024-.926 2.374-1.313 3.591-1.424 4.47-2.722 8.983-4.264 13.411-1.477 4.242-4.125 7.616-8.264 9.61a18.565 18.565 0 01-7.689 1.855c-3.98.088-7.962.098-11.943.134-.952.009-.996-.069-.748-.99 1.707-6.338 3.87-12.514 6.58-18.492 2.794-6.167 6.085-12.048 10.231-17.419 2.823-3.657 5.941-7.031 9.843-9.582 1.979-1.293 4.083-2.315 6.477-2.584.394-.045.793-.073 1.189-.073 8.478-.004 16.956.082 25.433-.039 4.547-.065 7.839 1.855 10.304 5.515 1.533 2.276 2.63 4.761 3.553 7.328 1.861 5.178 3.018 10.547 4.325 15.878.748 3.051 1.581 6.081 2.379 9.12.06.228.157.446.238.668l.199-.006z"/></svg></span><span class="skill-row__name">ASP.NET Core Web API</span></span>
+              <span class="skill-row"><span class="skill-row__icon skill-row__icon--svg skill-row__icon--ef"><svg viewBox="0 0 128 128" aria-hidden="true"><path fill="#512bd4" d="M0 0h128v128H0z"/><path fill="#fff" d="M73.022 80.632h-5.415V47.368H86.4v4.596H73.022V62.34h12.514v4.574H73.022v13.72zm-12.582 0H41.601V47.368h18.84v4.596H47.06v9.033h12.537v4.573H47.062v10.443H60.44v4.62z"/></svg></span><span class="skill-row__name">Entity Framework Core</span></span>
+            </div>
+          </div>
+
+          <div class="skill-category about-reveal">
+            <div class="skill-category__header">
+              <div class="skill-category__icon">
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <rect x="3" y="4.5" width="18" height="15" rx="2" stroke="currentColor" stroke-width="1.7"/>
+                  <line x1="3" y1="8.5" x2="21" y2="8.5" stroke="currentColor" stroke-width="1.7"/>
+                  <circle cx="6.2" cy="6.5" r="0.65" fill="currentColor"/>
+                  <circle cx="8.4" cy="6.5" r="0.65" fill="currentColor"/>
+                </svg>
+              </div>
+              <div class="skill-category__title-group">
+                <h3 class="skill-category__title" data-i18n="skillCatFrontend">Frontend Teknolojileri</h3>
+                <p class="skill-category__subtitle" data-i18n="skillCatFrontendDesc">Kullanıcı arayüzü geliştirmede kullandığım teknolojiler</p>
+              </div>
+            </div>
+            <div class="skill-category__list">
+              <span class="skill-row"><span class="skill-row__icon skill-row__icon--svg skill-row__icon--dotnet"><svg viewBox="0 0 128 128" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" fill="#1384C8" d="M82.108 78.432c.479-1.232 1.022-2.445 1.427-3.701 2.288-7.097 4.554-14.2 6.805-21.309.865-2.731 1.813-5.42 3.515-7.767 2.692-3.709 6.442-5.652 10.88-6.331a37.456 37.456 0 015.28-.406c5.267-.05 10.536-.015 15.804-.01.28 0 .56.029.957.052-.129.304-.199.525-.311.724-1.955 3.494-3.872 7.009-5.885 10.468-3.505 6.022-7.016 12.042-10.631 17.998-2.319 3.819-4.834 7.52-7.687 10.974-2.105 2.548-4.321 4.984-7.146 6.77-1.925 1.217-3.981 1.929-6.315 1.917-8.278-.045-16.556-.012-24.834-.024-2.461-.004-4.568-.941-6.356-2.603-2.563-2.381-4.093-5.412-5.345-8.608-2.284-5.835-3.563-11.951-5.031-18.014-.688-2.838-1.47-5.654-2.215-8.478-.048-.183-.142-.354-.25-.617l-.577.542c-3.228 3.207-6.071 6.741-8.615 10.498-.693 1.024-.926 2.374-1.313 3.591-1.424 4.47-2.722 8.983-4.264 13.411-1.477 4.242-4.125 7.616-8.264 9.61a18.565 18.565 0 01-7.689 1.855c-3.98.088-7.962.098-11.943.134-.952.009-.996-.069-.748-.99 1.707-6.338 3.87-12.514 6.58-18.492 2.794-6.167 6.085-12.048 10.231-17.419 2.823-3.657 5.941-7.031 9.843-9.582 1.979-1.293 4.083-2.315 6.477-2.584.394-.045.793-.073 1.189-.073 8.478-.004 16.956.082 25.433-.039 4.547-.065 7.839 1.855 10.304 5.515 1.533 2.276 2.63 4.761 3.553 7.328 1.861 5.178 3.018 10.547 4.325 15.878.748 3.051 1.581 6.081 2.379 9.12.06.228.157.446.238.668l.199-.006z"/></svg></span><span class="skill-row__name">.NET (Windows Forms)</span></span>
+              <span class="skill-row"><span class="skill-row__icon skill-row__icon--svg skill-row__icon--html5"><svg viewBox="0 0 24 24" fill="white" aria-hidden="true"><path d="M4 2.5h16l-1.5 16.7L12 21.5 5.5 19.2 4 2.5z" fill="white" opacity="0.0"/><path d="M4 2.5h16l-1.45 16.3L12 21.5l-6.55-2.7L4 2.5zm14.2 2H5.8l.45 5h11.5l-.4 4.6-5.35 1.5-5.35-1.5-.25-2.8H8.5l.1 1.3 3.4.95 3.4-.95.35-3.9H6.05l-.4-4.4h12.7l-.15 1.7z" fill="white"/></svg></span><span class="skill-row__name">HTML</span></span>
+              <span class="skill-row"><span class="skill-row__icon skill-row__icon--svg skill-row__icon--css3"><svg viewBox="0 0 24 24" fill="white" aria-hidden="true"><path d="M4 2.5h16l-1.5 16.7L12 21.5 5.5 19.2 4 2.5z" fill="white" opacity="0.0"/><path d="M4 2.5h16l-1.45 16.3L12 21.5l-6.55-2.7L4 2.5zm14.2 2H5.8l.45 5h11.5l-.4 4.6-5.35 1.5-5.35-1.5-.25-2.8H8.5l.1 1.3 3.4.95 3.4-.95.35-3.9H6.05l-.4-4.4h12.7l-.15 1.7z" fill="white"/></svg></span><span class="skill-row__name">CSS</span></span>
+            </div>
+          </div>
+
+          <div class="skill-category about-reveal">
+            <div class="skill-category__header">
+              <div class="skill-category__icon">
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <ellipse cx="12" cy="6" rx="7.5" ry="3" stroke="currentColor" stroke-width="1.8"/>
+                  <path d="M4.5 6v12c0 1.66 3.36 3 7.5 3s7.5-1.34 7.5-3V6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                  <path d="M4.5 12c0 1.66 3.36 3 7.5 3s7.5-1.34 7.5-3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <div class="skill-category__title-group">
+                <h3 class="skill-category__title" data-i18n="skillCatDatabases">Veritabanları</h3>
+                <p class="skill-category__subtitle" data-i18n="skillCatDatabasesDesc">Veri depolama ve yönetimi için kullandığım veritabanları</p>
+              </div>
+            </div>
+            <div class="skill-category__list">
+              <span class="skill-row"><span class="skill-row__icon skill-row__icon--svg skill-row__icon--sqlserver"><svg viewBox="0 0 128 128" aria-hidden="true"><path fill="#ee352c" d="M52.935 0v.002c-.426-.058-7.306 2.42-11.742 4.223-5.988 2.44-10.636 4.766-13.504 6.78-.926.657-2.054 1.75-2.475 2.37l-.007-.021a1.424 1.424 0 0 0-.069.148c-.022.04-.052.086-.066.12a1.812 1.812 0 0 0-.115.66l.064.06c.017.207.065.44.168.695.252.62.988 1.376 1.822 2.15 0 0 8.621 8.409 9.668 9.61 4.766 5.503 6.84 10.927 7.034 18.406.117 4.805-.796 9.03-3.063 13.932-4.03 8.796-12.535 18.504-25.652 29.276l.199-.067c-.09.072-.208.174-.295.242-1.57 1.24-3.896 3.565-5.078 5.038-1.764 2.209-3.157 4.553-3.758 6.355-1.066 3.255-.543 6.548 1.51 9.59 2.636 3.875 7.887 7.83 14.01 10.521 3.12 1.377 8.368 3.14 12.322 4.127 6.567 1.667 19.28 3.469 26.273 3.739 1.414.059 3.312.059 3.39 0 .155-.097 1.241-2.168 2.501-4.744 4.3-8.778 7.399-17.013 9.086-24.047 1.007-4.262 1.801-9.94 2.324-16.663.136-1.88.194-8.177.078-10.308-.175-3.487-.483-6.316-.968-9.086a4.17 4.17 0 0 1-.07-.573c15.578-4.628 32.768-8.821 44.187-10.568l1.764-.271-.272-.428c-1.55-2.403-2.615-3.894-3.894-5.483-3.72-4.61-8.233-8.349-13.756-11.449-7.595-4.244-17.419-7.557-29.858-10.018-2.344-.465-7.495-1.357-11.68-1.996l-.39-.699c-2.287-4.03-4.805-9.027-6.278-12.398-1.142-2.616-2.228-5.639-2.828-7.809C53.187.098 53.15.02 52.935 0Zm-.31.988h.02c.018.02.095.564.173 1.203.33 2.712.931 5.328 1.881 8.157.716 2.13.716 2.015-.117 1.763-1.976-.542-10.83-2.072-17.244-2.964-1.027-.135-1.899-.271-1.899-.291-.077-.078 4.63-2.537 6.703-3.506 2.654-1.22 9.94-4.265 10.483-4.362ZM33.947 9.67l.756.252c4.108 1.395 14.434 3.373 20.13 3.838.64.058 1.182.115 1.2.115.02.02-.52.31-1.219.639-2.75 1.376-5.775 3.061-7.867 4.36-.476.296-.912.546-1.127.648a1193.726 1193.726 0 0 1-1.932-.315l-1.824-1.787a803.536 803.536 0 0 0-7.11-6.84zm-.775.602 2.732 3.41c1.492 1.88 3.003 3.72 3.332 4.127.291.359.503.622.543.7-1.935-.337-4.006-.708-5.6-1.052-1.163-.252-3.39-.775-5.134-1.375-.18-.07-.385-.146-.58-.219v-.205c.02-1.3 1.666-3.238 4.455-5.213zm23.173 4.646c.015-.007.03-.006.04.004.077 0 .172.172.404.695.66 1.453 2.715 5.367 3.219 6.123l.064.104a1193.726 1193.726 0 0 1-10.977-1.79 2.86 2.86 0 0 1 .372-.232c2.035-1.124 4.088-2.557 5.91-4.088.445-.368.851-.715.93-.773a.097.097 0 0 1 .038-.043zm-26.138 3.275c.019-.018.329.1.736.235a50.336 50.336 0 0 0 2.81.851 142.909 142.909 0 0 0 2.557.678c1.162.29 2.132.563 2.15.563.137.136 2.094 6.394 2.753 8.797.252.91.446 1.685.427 1.685-.02.02-.234-.31-.486-.756-2.267-3.99-5.851-8.04-9.998-11.297-.542-.387-.95-.736-.95-.756zm9.513 2.618c0 .038 0 .02.02.02.098 0 .524.057 1.047.173 3.293.736 9.203 1.86 12.98 2.5.64.097 1.143.214 1.143.252 0 .04-.23.175-.522.33-.64.33-3.217 1.86-4.07 2.44-2.15 1.435-4.087 2.983-5.482 4.378a79.99 79.99 0 0 1-1.047 1.028s-.115-.33-.213-.737c-.697-2.694-2.15-6.684-3.469-9.494-.213-.445-.387-.852-.387-.89zm16.8 3.215c.115.04.31.699.697 2.152a31.732 31.732 0 0 1 .93 8.873c-.04.814-.079 1.57-.118 1.668l-.057.191-1.007-.33c-2.073-.658-5.444-1.645-8.33-2.459-1.648-.446-2.985-.852-2.985-.89 0-.117 2.403-2.52 3.43-3.43 1.956-1.725 7.264-5.832 7.44-5.775zm1.335.195c.058-.058 8.024 1.316 11.647 2.014 2.694.523 6.607 1.338 6.84 1.435.115.04-.291.269-1.59.852-5.115 2.305-8.914 4.38-12.692 6.898-.988.66-1.822 1.201-1.84 1.201-.02 0-.039-.562-.039-1.24 0-3.681-.734-7.401-2.091-10.54-.136-.31-.254-.601-.235-.62zm20.596 4.068c.058.057-.193 1.629-.426 2.559-.698 2.887-2.576 7.17-4.88 11.2-.409.716-.778 1.297-.817 1.316-.038.02-.558-.273-1.16-.622-2.247-1.318-4.806-2.555-7.596-3.718-.775-.33-1.454-.601-1.473-.641-.136-.115 6.104-4.242 9.397-6.219 2.617-1.589 6.879-3.952 6.955-3.875zm1.475.233c.174 0 3.7.968 5.54 1.511 4.554 1.356 9.784 3.275 13.194 4.825l1.414.638-.986.233c-8.33 1.918-15.463 4.129-22.342 6.918-.562.233-1.066.425-1.104.425-.039 0 .157-.444.409-.986 2.073-4.399 3.408-8.991 3.738-12.906.019-.368.079-.658.137-.658zm-35.11 8.06c.058-.058 2.751.582 4.205.989 2.21.62 6.899 2.19 6.899 2.304 0 .02-.525.466-1.145 1.008-2.538 2.112-4.98 4.341-7.906 7.17-.871.833-1.606 1.51-1.645 1.51-.04 0-.059-.115-.04-.27.445-3.255.35-7.44-.27-11.683-.06-.543-.117-1.009-.098-1.028zm56.596.059c.038.039-1.24 2.052-2.055 3.195-1.162 1.667-2.867 3.877-6.722 8.72a1289.46 1289.46 0 0 0-5.076 6.413c-.775.969-1.415 1.783-1.436 1.783-.018 0-.27-.35-.541-.775-2.17-3.256-4.767-6.103-7.848-8.66a44.534 44.534 0 0 0-1.431-1.164c-.214-.155-.39-.31-.39-.33 0-.057 3.294-1.472 5.794-2.479 4.38-1.783 10.345-3.913 14.822-5.29 2.344-.735 4.844-1.452 4.883-1.413zm1.492.387c.077-.02.543.214 1.104.543 4.709 2.693 9.32 6.162 12.963 9.726 1.027 1.008 3.564 3.641 3.525 3.66 0 0-.891.08-1.937.157-8.157.62-18.6 2.343-28.635 4.765-.68.155-1.28.291-1.319.291-.038 0 .716-.756 1.666-1.666 5.89-5.677 8.583-9.261 11.76-15.656.446-.948.834-1.762.873-1.82zm-43.148 4.418c.27.058 2.788 1.239 4.687 2.189 1.744.871 4.361 2.266 4.496 2.383.02.019-.91.503-2.054 1.066a135.033 135.033 0 0 0-10.018 5.522c-.93.562-1.704 1.027-1.723 1.027-.078 0-.058-.078.465-1.027 1.744-3.177 3.14-6.975 3.934-10.676.077-.29.155-.484.213-.484zm-2.52.464c.058.058-.6 2.442-1.008 3.74-.795 2.46-2.131 5.54-3.43 7.866-.31.542-.775 1.338-1.027 1.783l-.484.774-1.084-1.045c-1.26-1.22-2.287-1.978-3.604-2.657-.524-.27-.93-.502-.93-.54 0-.156 3.314-3.159 5.852-5.329 1.82-1.57 5.657-4.65 5.715-4.592zm15.404 6.336.95.62c2.17 1.414 4.726 3.295 6.683 4.94 1.104.91 3.235 2.83 3.662 3.294l.233.252-1.57.447c-8.874 2.46-15.733 4.649-23.735 7.594-.892.33-1.647.6-1.705.6-.116 0-.213.096 1.783-1.745 5.115-4.707 9.65-9.898 13.022-14.955zm-4.05 1.008c.04.04-2.614 3.777-4.203 5.889-1.9 2.519-5.272 6.743-7.598 9.494-.968 1.144-1.8 2.092-1.84 2.111-.058.02-.078-.27-.078-.716 0-2.344-.599-4.844-1.645-6.975-.446-.891-.523-1.104-.425-1.201.368-.33 6.004-3.545 9.568-5.463 2.404-1.28 6.163-3.177 6.22-3.139zM44.1 55.26c.057 0 .502.233 1.007.504a21.28 21.28 0 0 1 3.332 2.248c.04.038-.464.446-1.123.93-1.84 1.317-4.63 3.43-6.258 4.728-1.705 1.356-1.763 1.394-1.57 1.104 1.28-1.957 1.92-3.062 2.598-4.477a36.066 36.066 0 0 0 1.627-4.05c.155-.56.347-.987.386-.987zm6.53 5.113c.097-.018.213.157.735.932 1.104 1.647 1.957 3.857 2.17 5.639l.039.386-2.654 1.028c-4.747 1.84-9.126 3.662-12.09 5.02a217.067 217.067 0 0 0-3.237 1.548c-.95.484-1.724.853-1.724.834 0-.02.6-.465 1.336-1.008 5.794-4.204 10.813-8.816 14.572-13.427.407-.484.775-.93.813-.95zm-3.003.737v.002c.078.077-2.132 2.576-3.643 4.107-3.74 3.816-7.441 6.801-12.033 9.707-.582.368-1.104.697-1.162.735-.135.078.038-.116 2.054-2.305a52.694 52.694 0 0 0 3.352-3.97c.736-.95.871-1.086 1.937-1.84 2.85-2.056 9.418-6.513 9.495-6.436zm25.974 2.3c.274 1.057.78 6.126.918 9.481.04.795.019 1.318-.021 1.318-.154 0-3.273-1.84-5.5-3.236-1.93-1.215-5.579-3.634-6.18-4.113a358.495 358.495 0 0 1 10.783-3.45zm-12.867 4.192c.254.11.635.32 1.404.795 3.991 2.5 9.418 5.522 11.743 6.53.716.31.793.193-.854 1.318-3.526 2.402-7.924 4.765-13.31 7.148-.95.426-1.745.756-1.764.756-.04 0 .077-.486.232-1.067 1.297-4.825 2.036-9.705 2.075-13.619.01-.977.014-1.46.039-1.707l.435-.154zm-2.965 1.055c.094.476.021 4.368-.127 5.494a49.361 49.361 0 0 1-1.78 8.428c-.214.717-.41 1.319-.448 1.357-.078.097-2.732-2.5-3.604-3.508-1.51-1.744-2.692-3.486-3.564-5.191-.404-.79-.987-2.205-1.055-2.518a345.346 345.346 0 0 1 8.592-3.355c.617-.232 1.343-.473 1.986-.707zm-12.603 4.9c.047.069.163.327.271.652.62 1.685 2.013 4.165 3.215 5.754 1.318 1.744 3.043 3.605 4.477 4.825.465.387.89.756.949.814.116.117.155.097-3.004 1.299-3.66 1.395-7.652 2.79-12.225 4.262a609.84 609.84 0 0 0-3.275 1.066c-.175.058-.114-.04.389-.834 2.267-3.544 5.714-10.5 7.652-15.422.33-.853.659-1.706.717-1.9.027-.095.066-.15.103-.211l.73-.305zm-4.01 1.7c-.132.39-.973 2.151-1.842 3.853-1.88 3.663-3.933 7.267-6.684 11.646-.466.755-.91 1.453-.97 1.53-.096.136-.135.098-.446-.502-.659-1.3-1.2-2.965-1.492-4.496-.29-1.511-.232-4.146.098-5.774.15-.717.216-.987.36-1.16a225.041 225.041 0 0 1 10.976-5.098zm33.479 1.2v.813c0 4.321-.465 10.25-1.143 14.57-.116.756-.213 1.377-.232 1.397 0 0-.563-.156-1.221-.35a49.985 49.985 0 0 1-8.912-3.816c-1.88-1.027-4.61-2.714-4.533-2.791.019-.02.832-.445 1.78-.95 3.799-1.975 7.441-4.107 10.6-6.22 1.182-.794 2.963-2.071 3.35-2.42zm-48.048 5.737c.074.004.052.163-.062.851a27.507 27.507 0 0 0-.213 2.07c-.155 2.83.31 4.925 1.705 7.792.388.794.698 1.453.678 1.472-.135.117-12.962 3.875-16.992 4.979-1.201.33-2.247.62-2.325.639-.136.04-.155.021-.097-.309.446-2.848 2.617-6.568 5.64-9.707 2.014-2.093 3.622-3.314 6.373-4.883.921-.524 2.066-1.163 3.057-1.71.737-.401 1.484-.799 2.236-1.194zm30.221 5.404h.002c.02-.02.483.232 1.045.56 4.147 2.404 9.921 4.633 14.842 5.776l.445.096-.619.35c-2.576 1.433-11.045 4.96-19.705 8.195-1.26.465-2.498.93-2.73 1.027-.233.097-.448.155-.448.135 0-.02.35-.698.795-1.531 2.422-4.534 4.863-10.055 6.104-13.891.155-.368.25-.697.27-.717zm-3.08 1.006h.002c.02.02-.136.428-.33.893-1.686 4.088-3.895 8.545-6.724 13.543-.716 1.28-1.317 2.306-1.336 2.306-.02 0-.601-.35-1.3-.775-4.106-2.52-7.75-5.62-10.132-8.623l-.35-.426 1.764-.484c6.316-1.724 11.684-3.584 17.012-5.87.756-.31 1.375-.564 1.394-.564zm19.143 6.686c.02.446-.967 4.437-1.781 7.324-.678 2.422-1.26 4.32-2.327 7.672-.464 1.474-.87 2.693-.89 2.693-.02 0-.135-.018-.252-.056-5.754-1.047-10.908-2.501-15.752-4.438-1.356-.543-3.293-1.415-3.41-1.512-.038-.039 1.124-.581 2.597-1.22 8.816-3.856 17.96-8.235 21.1-10.114.368-.233.657-.35.715-.35zM28.677 96.8c.04.04-2.423 3.585-5.87 8.41-1.203 1.686-2.597 3.661-3.12 4.397a77.468 77.468 0 0 0-1.764 2.596l-.814 1.261-.871-.738c-1.027-.853-2.809-2.673-3.604-3.68-1.666-2.073-2.791-4.264-3.236-6.26-.214-.93-.214-1.394-.02-1.45a1459.308 1459.308 0 0 1 10.31-2.424 861.655 861.655 0 0 0 6.935-1.627c1.124-.271 2.035-.485 2.054-.485zm2.479.95.621.697c2.79 3.12 5.637 5.425 9.086 7.44.62.35 1.086.659 1.047.679-.135.096-11.974 4.3-17.457 6.2a462.503 462.503 0 0 1-5.639 1.956c-.019 0-.194-.117-.387-.252l-.35-.252.563-.814c1.82-2.635 4.107-5.521 9.086-11.528zm15.463 11.062c.019-.02.87.29 1.918.68 2.519.949 4.513 1.55 7.187 2.228 3.294.833 8.061 1.646 10.872 1.88.426.037.657.076.58.134-.136.077-2.985 1.028-5.077 1.686-3.333 1.047-13.504 4.05-21.797 6.433a218.736 218.736 0 0 1-2.925.834c-.194.038-.834-.138-.834-.215 0-.038.465-.638 1.027-1.297 2.79-3.333 5.561-7.054 7.867-10.58.64-.969 1.182-1.764 1.182-1.783zm-3.412.098h.002c.019.02-1.357 2.227-3.76 6.025-1.026 1.608-2.17 3.432-2.576 4.07-.388.62-.971 1.59-1.3 2.131l-.56.987-.29-.076c-.699-.195-5.601-1.919-6.9-2.442a48.226 48.226 0 0 1-4.513-2.072c-1.55-.834-3.487-2.074-3.332-2.113.038-.02 2.692-.736 5.889-1.608 8.485-2.306 13.194-3.642 16.275-4.611.562-.175 1.046-.311 1.065-.291zm24.123 5.656h.021c.077.195-3.063 8.913-4.207 11.664-.25.62-.348.776-.484.756-.33-.02-4.881-.657-7.652-1.064-4.824-.736-12.925-2.15-14.958-2.616l-.464-.097 2.886-.659c6.2-1.395 9.184-2.15 12.207-3.08a86.251 86.251 0 0 0 11.413-4.4c.6-.27 1.102-.483 1.238-.502z"/></svg></span><span class="skill-row__name">SQL Server</span></span>
+              <span class="skill-row"><span class="skill-row__icon skill-row__icon--svg skill-row__icon--sql"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.6" aria-hidden="true"><ellipse cx="12" cy="5.5" rx="7.5" ry="2.8"/><path d="M4.5 5.5v6c0 1.5 3.4 2.8 7.5 2.8s7.5-1.3 7.5-2.8v-6"/><path d="M4.5 11.5v6c0 1.5 3.4 2.8 7.5 2.8s7.5-1.3 7.5-2.8v-6"/></svg></span><span class="skill-row__name">SQL</span></span>
+            </div>
+          </div>
+
+          <div class="skill-category about-reveal">
+            <div class="skill-category__header">
+              <div class="skill-category__icon">
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <circle cx="12" cy="12" r="8.5" stroke="currentColor" stroke-width="1.8"/>
+                  <circle cx="9.2" cy="10.2" r="1.1" fill="currentColor"/>
+                  <circle cx="9.2" cy="14" r="1.1" fill="currentColor"/>
+                  <circle cx="15.2" cy="9" r="1.1" fill="currentColor"/>
+                  <circle cx="15.6" cy="15.2" r="1.1" fill="currentColor"/>
+                </svg>
+              </div>
+              <div class="skill-category__title-group">
+                <h3 class="skill-category__title" data-i18n="skillCatGameDev">Oyun Geliştirme</h3>
+                <p class="skill-category__subtitle" data-i18n="skillCatGameDevDesc">Oyun geliştirme projelerinde kullandığım teknolojiler</p>
+              </div>
+            </div>
+            <div class="skill-category__list">
+              <span class="skill-row"><span class="skill-row__icon skill-row__icon--svg skill-row__icon--unity"><svg viewBox="0 0 128 128" aria-hidden="true"><path d="m63.991 128 51.702-29.855-19.817-11.461-20.26 11.704a1.151 1.151 0 0 1-1.125-.009 1.145 1.145 0 0 1-.568-.975V69.608c0-.819.424-1.56 1.133-1.968L99.13 53.737a1.119 1.119 0 0 1 1.124.009c.352.195.572.564.576.966V78.11l19.83 11.454V29.855L63.99 62.566Zm0 0"/><path fill="#4d4d4d" d="m52.397 98.401-20.27-11.718-19.832 11.46L63.991 128V62.566L7.34 29.854V89.56l19.825-11.45V54.714c.009-.401.225-.77.572-.966a1.13 1.13 0 0 1 1.13-.009L52.953 67.64a2.275 2.275 0 0 1 1.133 1.97v27.8a1.156 1.156 0 0 1-.565.98 1.131 1.131 0 0 1-1.124.012"/><path fill="gray" d="M68.959 0v22.9L89.22 34.597c.348.203.555.576.555.984 0 .403-.212.772-.555.975L65.137 50.468a2.302 2.302 0 0 1-2.27 0L38.791 36.556a1.122 1.122 0 0 1-.56-.975 1.127 1.127 0 0 1 .56-.984L59.048 22.9V0L7.339 29.855l56.652 32.711 56.665-32.71Zm0 0"/></svg></span><span class="skill-row__name">Unity</span></span>
+              <span class="skill-row"><span class="skill-row__icon skill-row__icon--svg skill-row__icon--csharp"><svg viewBox="0 0 128 128" aria-hidden="true"><path fill="#9B4F96" d="M115.4 30.7L67.1 2.9c-.8-.5-1.9-.7-3.1-.7-1.2 0-2.3.3-3.1.7l-48 27.9c-1.7 1-2.9 3.5-2.9 5.4v55.7c0 1.1.2 2.4 1 3.5l106.8-62c-.6-1.2-1.5-2.1-2.4-2.7z"/><path fill="#68217A" d="M10.7 95.3c.5.8 1.2 1.5 1.9 1.9l48.2 27.9c.8.5 1.9.7 3.1.7 1.2 0 2.3-.3 3.1-.7l48-27.9c1.7-1 2.9-3.5 2.9-5.4V36.1c0-.9-.1-1.9-.6-2.8l-106.6 62z"/><path fill="#fff" d="M85.3 76.1C81.1 83.5 73.1 88.5 64 88.5c-13.5 0-24.5-11-24.5-24.5s11-24.5 24.5-24.5c9.1 0 17.1 5 21.3 12.5l13-7.5c-6.8-11.9-19.6-20-34.3-20-21.8 0-39.5 17.7-39.5 39.5s17.7 39.5 39.5 39.5c14.6 0 27.4-8 34.2-19.8l-12.9-7.6zM97 66.2l.9-4.3h-4.2v-4.7h5.1L100 51h4.9l-1.2 6.1h3.8l1.2-6.1h4.8l-1.2 6.1h2.4v4.7h-3.3l-.9 4.3h4.2v4.7h-5.1l-1.2 6h-4.9l1.2-6h-3.8l-1.2 6h-4.8l1.2-6h-2.4v-4.7H97zm4.8 0h3.8l.9-4.3h-3.8l-.9 4.3z"/></svg></span><span class="skill-row__name">C#</span></span>
+            </div>
+          </div>
+
+          <div class="skill-category about-reveal">
+            <div class="skill-category__header">
+              <div class="skill-category__icon">
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <circle cx="6" cy="6" r="2.2" stroke="currentColor" stroke-width="1.7"/>
+                  <circle cx="6" cy="18" r="2.2" stroke="currentColor" stroke-width="1.7"/>
+                  <circle cx="18" cy="9" r="2.2" stroke="currentColor" stroke-width="1.7"/>
+                  <path d="M6 8.2V15.8M6 12c0 2.6 2.4 3.5 5 3.5h2.4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <div class="skill-category__title-group">
+                <h3 class="skill-category__title" data-i18n="skillCatVersionControl">Versiyon Kontrol</h3>
+                <p class="skill-category__subtitle" data-i18n="skillCatVersionControlDesc">Kod yönetimi ve iş birliği için kullandığım araçlar</p>
+              </div>
+            </div>
+            <div class="skill-category__list">
+              <span class="skill-row">
+                <span class="skill-row__icon skill-row__icon--svg skill-row__icon--git">
+                  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <circle cx="6" cy="6" r="2.2" stroke="currentColor" stroke-width="1.8"/>
+                    <circle cx="6" cy="18" r="2.2" stroke="currentColor" stroke-width="1.8"/>
+                    <circle cx="18" cy="9" r="2.2" stroke="currentColor" stroke-width="1.8"/>
+                    <path d="M6 8.2V15.8M6 12c0 2.6 2.4 3.5 5 3.5h2.4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                  </svg>
+                </span>
+                <span class="skill-row__name">Git</span>
+              </span>
+              <span class="skill-row">
+                <span class="skill-row__icon skill-row__icon--svg skill-row__icon--github">
+                  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path d="M12 2.2C6.6 2.2 2.2 6.6 2.2 12c0 4.3 2.8 8 6.6 9.3.5.1.7-.2.7-.5v-1.8c-2.7.6-3.3-1.2-3.3-1.2-.4-1.1-1-1.4-1-1.4-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.5 2.3 1.1 2.9.8.1-.6.3-1.1.6-1.3-2.2-.2-4.4-1.1-4.4-4.8 0-1.1.4-1.9 1-2.6-.1-.2-.4-1.2.1-2.5 0 0 .8-.3 2.7 1 .8-.2 1.6-.3 2.5-.3s1.7.1 2.5.3c1.9-1.3 2.7-1 2.7-1 .5 1.3.2 2.3.1 2.5.6.7 1 1.5 1 2.6 0 3.7-2.2 4.6-4.4 4.8.4.3.7.9.7 1.8v2.7c0 .3.2.6.7.5 3.8-1.3 6.6-5 6.6-9.3 0-5.4-4.4-9.8-9.8-9.8Z" fill="currentColor"/>
+                  </svg>
+                </span>
+                <span class="skill-row__name">GitHub</span>
+              </span>
+            </div>
+          </div>
+
+          <div class="skill-category about-reveal">
+            <div class="skill-category__header">
+              <div class="skill-category__icon">
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M14.7 6.3a4 4 0 0 0-5.4 4.9L4 16.5V20h3.5l5.3-5.3a4 4 0 0 0 4.9-5.4l-2.9 2.9-2.1-2.1 2.9-2.9Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div class="skill-category__title-group">
+                <h3 class="skill-category__title" data-i18n="skillCatTools">Araçlar</h3>
+                <p class="skill-category__subtitle" data-i18n="skillCatToolsDesc">Geliştirme sürecini destekleyen araçlar ve yazılımlar</p>
+              </div>
+            </div>
+            <div class="skill-category__list">
+              <span class="skill-row"><span class="skill-row__icon skill-row__icon--svg skill-row__icon--vs"><svg viewBox="0 0 128 128" aria-hidden="true"><path fill="#52218a" d="M94.145.348a8 8 0 0 0-.563.072 8 8 0 0 0-.928.027 8 8 0 0 0-.982.215 8 8 0 0 0-.553.072 8 8 0 0 0-.822.387 8 8 0 0 0-.486.229A8 8 0 0 0 88 2.668L45.486 49.674l-24.82-20.34-2.172-1.865a5.333 5.333 0 0 0-.826-.463 5.333 5.333 0 0 0-.535-.3 5.333 5.333 0 0 0-.604-.227 5.333 5.333 0 0 0-.644-.15 5.333 5.333 0 0 0-.504-.017 5.333 5.333 0 0 0-.51-.074 5.333 5.333 0 0 0-.266.06 5.333 5.333 0 0 0-.214-.003 5.333 5.333 0 0 0-.227.06 5.333 5.333 0 0 0-.484.006 3.4 3.4 0 0 0-.707.24l-9.694 4.067a5.333 5.333 0 0 0-1.466.95 5.333 5.333 0 0 0-.215.177 5.333 5.333 0 0 0-.23.312 5.333 5.333 0 0 0-.64.88 5.333 5.333 0 0 0-.267.476 5.333 5.333 0 0 0-.09.275 5.333 5.333 0 0 0-.232.908 5.333 5.333 0 0 0-.139.516v57.68a5.333 5.333 0 0 0 .139.512 5.333 5.333 0 0 0 .232.914 5.333 5.333 0 0 0 .09.271 5.333 5.333 0 0 0 .268.477 5.333 5.333 0 0 0 .638.879 5.333 5.333 0 0 0 .23.312 5.333 5.333 0 0 0 .216.178 5.333 5.333 0 0 0 1.466.949l9.694 4.066a5.333 5.333 0 0 0 1.716.37 5.333 5.333 0 0 0 .51-.01 5.333 5.333 0 0 0 1.272-.198 5.333 5.333 0 0 0 .51-.154 5.333 5.333 0 0 0 1.513-.873l2.172-1.867 24.82-20.34L88 125.334a8 8 0 0 0 1.902 1.387 8 8 0 0 0 .604.23 8 8 0 0 0 .006.002 8 8 0 0 0 1.342.516 8 8 0 0 0 .242.013 8 8 0 0 0 1.558.088 8 8 0 0 0 .99.014 8 8 0 0 0 2.45-.703l26.373-12.68a8 8 0 0 0 .572-.306 8 8 0 0 0 .17-.106 8 8 0 0 0 .383-.25 8 8 0 0 0 .181-.135 8 8 0 0 0 .33-.258 8 8 0 0 0 .204-.173 8 8 0 0 0 .277-.26 8 8 0 0 0 .19-.19 8 8 0 0 0 .283-.314 8 8 0 0 0 .144-.166 8 8 0 0 0 .266-.352 8 8 0 0 0 .142-.193 8 8 0 0 0 .33-.53 8 8 0 0 0 .09-.17 8 8 0 0 0 .2-.386 8 8 0 0 0 .113-.256 8 8 0 0 0 .152-.379 8 8 0 0 0 .076-.215 8 8 0 0 0 .116-.367 8 8 0 0 0 .082-.304 8 8 0 0 0 .072-.342 8 8 0 0 0 .053-.274 8 8 0 0 0 .056-.431 8 8 0 0 0 .022-.18 8 8 0 0 0 .002-.023 8 8 0 0 0 .027-.653V21.027a8 8 0 0 0 0-.011 8 8 0 0 0-.027-.655 8 8 0 0 0-.018-.158 8 8 0 0 0-.066-.508 8 8 0 0 0-.034-.17 8 8 0 0 0-.095-.443 8 8 0 0 0-.073-.268 8 8 0 0 0-.103-.33 8 8 0 0 0-.102-.295 8 8 0 0 0-.142-.345 8 8 0 0 0-.1-.233 8 8 0 0 0-.209-.404 8 8 0 0 0-.103-.195 8 8 0 0 0-.332-.528 8 8 0 0 0-.106-.14 8 8 0 0 0-.277-.37 8 8 0 0 0-.188-.216 8 8 0 0 0-.246-.274 8 8 0 0 0-.193-.193 8 8 0 0 0-.28-.262 8 8 0 0 0-.202-.174 8 8 0 0 0-.33-.257 8 8 0 0 0-.182-.135 8 8 0 0 0-.383-.25 8 8 0 0 0-.17-.106 8 8 0 0 0-.572-.306L97.094 1.12A8 8 0 0 0 94.75.416a8 8 0 0 0-.342.002 8 8 0 0 0-.263-.07zM96 36.908v54.186L62.947 64.002 96 36.908zm-80 8.82 16.527 18.274L16 82.275V45.73z"/></svg></span><span class="skill-row__name">Visual Studio</span></span>
+              <span class="skill-row"><span class="skill-row__icon skill-row__icon--svg skill-row__icon--vscode"><svg viewBox="0 0 128 128" aria-hidden="true"><mask id="a" width="128" height="128" x="0" y="0" maskUnits="userSpaceOnUse" style="mask-type:alpha"><path fill="#fff" fill-rule="evenodd" d="M90.767 127.126a7.968 7.968 0 0 0 6.35-.244l26.353-12.681a8 8 0 0 0 4.53-7.209V21.009a8 8 0 0 0-4.53-7.21L97.117 1.12a7.97 7.97 0 0 0-9.093 1.548l-50.45 46.026L15.6 32.013a5.328 5.328 0 0 0-6.807.302l-7.048 6.411a5.335 5.335 0 0 0-.006 7.888L20.796 64 1.74 81.387a5.336 5.336 0 0 0 .006 7.887l7.048 6.411a5.327 5.327 0 0 0 6.807.303l21.974-16.68 50.45 46.025a7.96 7.96 0 0 0 2.743 1.793Zm5.252-92.183L57.74 64l38.28 29.058V34.943Z" clip-rule="evenodd"/></mask><g mask="url(#a)"><path fill="#0065A9" d="M123.471 13.82 97.097 1.12A7.973 7.973 0 0 0 88 2.668L1.662 81.387a5.333 5.333 0 0 0 .006 7.887l7.052 6.411a5.333 5.333 0 0 0 6.811.303l103.971-78.875c3.488-2.646 8.498-.158 8.498 4.22v-.306a8.001 8.001 0 0 0-4.529-7.208Z"/><g filter="url(#b)"><path fill="#007ACC" d="m123.471 114.181-26.374 12.698A7.973 7.973 0 0 1 88 125.333L1.662 46.613a5.333 5.333 0 0 1 .006-7.887l7.052-6.411a5.333 5.333 0 0 1 6.811-.303l103.971 78.874c3.488 2.647 8.498.159 8.498-4.219v.306a8.001 8.001 0 0 1-4.529 7.208Z"/></g><g filter="url(#c)"><path fill="#1F9CF0" d="M97.098 126.882A7.977 7.977 0 0 1 88 125.333c2.952 2.952 8 .861 8-3.314V5.98c0-4.175-5.048-6.266-8-3.313a7.977 7.977 0 0 1 9.098-1.549L123.467 13.8A8 8 0 0 1 128 21.01v85.982a8 8 0 0 1-4.533 7.21l-26.369 12.681Z"/></g><path fill="url(#d)" fill-rule="evenodd" d="M90.69 127.126a7.968 7.968 0 0 0 6.349-.244l26.353-12.681a8 8 0 0 0 4.53-7.21V21.009a8 8 0 0 0-4.53-7.21L97.039 1.12a7.97 7.97 0 0 0-9.093 1.548l-50.45 46.026-21.974-16.68a5.328 5.328 0 0 0-6.807.302l-7.048 6.411a5.336 5.336 0 0 0-.006 7.888L20.718 64 1.662 81.386a5.335 5.335 0 0 0 .006 7.888l7.048 6.411a5.328 5.328 0 0 0 6.807.303l21.975-16.681 50.45 46.026a7.959 7.959 0 0 0 2.742 1.793Zm5.252-92.184L57.662 64l38.28 29.057V34.943Z" clip-rule="evenodd" opacity="0.25" style="mix-blend-mode:overlay"/></g><defs><filter id="b" width="144.744" height="113.408" x="-8.41115" y="22.5944" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feColorMatrix in="SourceAlpha" result="hardAlpha" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"/><feOffset/><feGaussianBlur stdDeviation="4.16667"/><feColorMatrix values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"/><feBlend in2="BackgroundImageFix" mode="overlay" result="effect1_dropShadow_1_36"/><feBlend in="SourceGraphic" in2="effect1_dropShadow_1_36" result="shape"/></filter><filter id="c" width="56.6667" height="144.007" x="79.6667" y="-8.0035" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feColorMatrix in="SourceAlpha" result="hardAlpha" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"/><feOffset/><feGaussianBlur stdDeviation="4.16667"/><feColorMatrix values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"/><feBlend in2="BackgroundImageFix" mode="overlay" result="effect1_dropShadow_1_36"/><feBlend in="SourceGraphic" in2="effect1_dropShadow_1_36" result="shape"/></filter><linearGradient id="d" x1="63.9222" x2="63.9222" y1="0.329902" y2="127.67" gradientUnits="userSpaceOnUse"><stop stop-color="#fff"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient></defs></svg></span><span class="skill-row__name">VS Code</span></span>
+              <span class="skill-row"><span class="skill-row__icon skill-row__icon--ssms">SSMS</span><span class="skill-row__name">SQL Server Management Studio</span></span>
+              <span class="skill-row"><span class="skill-row__icon skill-row__icon--svg skill-row__icon--postman"><svg viewBox="0 0 24 24" fill="white" aria-hidden="true"><path d="M3 11.5L21 3l-7.5 18-2.3-7.2L3 11.5z"/></svg></span><span class="skill-row__name">Postman</span></span>
+            </div>
+          </div>
+
+          <div class="skill-category about-reveal">
+            <div class="skill-category__header">
+              <div class="skill-category__icon">
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <circle cx="6" cy="12" r="1.6" fill="currentColor"/>
+                  <circle cx="12" cy="12" r="1.6" fill="currentColor"/>
+                  <circle cx="18" cy="12" r="1.6" fill="currentColor"/>
+                </svg>
+              </div>
+              <div class="skill-category__title-group">
+                <h3 class="skill-category__title" data-i18n="skillCatOther">Diğer Teknolojiler</h3>
+                <p class="skill-category__subtitle" data-i18n="skillCatOtherDesc">Çalışmalarımda kullandığım diğer teknolojiler</p>
+              </div>
+            </div>
+            <div class="skill-category__list">
+              <span class="skill-row"><span class="skill-row__icon skill-row__icon--svg skill-row__icon--figma"><svg viewBox="0 0 24 32" aria-hidden="true">
+  <path d="M8 32c2.2 0 4-1.8 4-4v-4H8c-2.2 0-4 1.8-4 4s1.8 4 4 4z" fill="#0ACF83"/>
+  <path d="M4 16c0-2.2 1.8-4 4-4h4v8H8c-2.2 0-4-1.8-4-4z" fill="#A259FF"/>
+  <path d="M4 8c0-2.2 1.8-4 4-4h4v8H8c-2.2 0-4-1.8-4-4z" fill="#F24E1E"/>
+  <path d="M12 0h4c2.2 0 4 1.8 4 4s-1.8 4-4 4h-4V0z" fill="#FF7262"/>
+  <path d="M20 16c0 2.2-1.8 4-4 4s-4-1.8-4-4 1.8-4 4-4 4 1.8 4 4z" fill="#1ABCFE"/>
+</svg></span><span class="skill-row__name">Figma</span></span>
+              <span class="skill-row"><span class="skill-row__icon skill-row__icon--svg skill-row__icon--canva"><svg viewBox="0 0 128 128" aria-hidden="true"><g fill="#00c4cc"><path d="M59.39.152c-.484.051-1.995.23-3.328.387-5.374.613-11.468 2.227-16.816 4.48C19.891 13.106 5.324 30.849 1.305 51.2.359 56.04.129 58.418.129 64c0 7.195.715 12.16 2.61 18.434 6.195 20.53 22.323 36.632 42.906 42.851 6.195 1.871 11.187 2.586 18.355 2.586 7.195 0 12.16-.715 18.434-2.61 20.53-6.195 36.632-22.323 42.851-42.906 1.871-6.195 2.586-11.187 2.586-18.355 0-3.047-.152-6.527-.332-7.809-2.074-14.796-8.168-27.238-18.328-37.402C99.07 8.703 86.68 2.586 72.19.512c-1.996-.282-11.238-.54-12.8-.36zm-20.863 40.32c1.36.41 1.996.794 2.918 1.715 1.793 1.82 2.203 2.817 2.203 5.555 0 2.051-.078 2.434-.691 3.508-1.18 1.996-3.918 3.84-5.812 3.89-1.333.028-1.278-.562.18-2.097 1.945-2.023 2.226-2.79 2.226-5.813-.024-2.917-.383-3.914-1.739-4.734-1.128-.691-2.355-.64-4.148.203-4.66 2.23-9.703 9.653-11.672 17.258-2.613 10.137 2.02 18.25 9.649 16.867 2.226-.41 6.425-2.558 8.246-4.25 1.508-1.379 1.508-1.406 1.66-3.12.336-3.587 2.867-7.169 6.25-8.833 1.558-.77 1.945-.844 4.043-.844 1.996 0 2.457.102 3.43.637 3.097 1.77 2.457 5.89-.895 5.89-1.945 0-2.945-1-1.535-1.534 1.383-.512.867-2.434-.742-2.868-1.895-.488-4.047.793-5.403 3.25-1.64 2.97-1.715 6.504-.156 8.114 1.512 1.613 3.406.336 4.867-3.329.766-1.867 1.867-2.867 3.149-2.867 1.125 0 1.332.692.843 2.793-.718 3.25-.23 4.094 1.793 3.098.664-.309 1.766-1.023 2.43-1.535l1.254-1 .848-4.43c.922-4.965 1.277-5.633 3.172-5.988 1.82-.336 2.23.562 1.562 3.402l-.36 1.59 1.333-1.36c3.148-3.226 7.015-4.812 8.347-3.48.715.715.637 1.613-.386 4.785-.485 1.512-1.153 3.895-1.457 5.25-.461 2.047-.489 2.535-.23 2.868.82.972 3.327-.028 5.554-2.204l1.305-1.277.156-2.844c.152-3.277.457-4.453 1.328-5.504.82-.972 2.305-1.687 3.098-1.484.793.207.793.973.078 3.227-1 3.097-.895 10.238.129 10.238.41 0 2.507-2.2 3.84-4.043l.996-1.36-.793-.816c-1.383-1.46-1.715-2.406-1.715-4.789 0-1.738.129-2.379.562-3.227.719-1.328 1.844-2.3 3.176-2.687 1.406-.434 3.148.281 3.863 1.562.719 1.305.54 4.223-.383 6.223l-.664 1.457h.895c1.23 0 1.715-.305 3.918-2.379 1.152-1.101 2.484-2.05 3.48-2.511 3.918-1.84 8.528-.895 9.293 1.921.64 2.254-.765 3.84-3.226 3.66-1.766-.128-2.098-.59-1.074-1.456 1.843-1.54 0-3.508-2.637-2.793-1.434.386-3.047 1.996-3.89 3.867-1.692 3.738-.794 8.14 1.636 8.14.973 0 2.691-1.921 3.355-3.789.793-2.152 2.457-3.507 3.711-3.02.692.255.743.946.309 3.122-.488 2.383-.563 4.61-.18 5.633.153.382.614 1.101 1.051 1.586.816.921.844 1.254.152 1.691-.332.23-.77.129-1.843-.46-1.485-.77-2.766-2.153-3.227-3.458l-.281-.766-1.024.766c-.59.41-1.511.871-2.047 1.023-2.125.563-4.738-.894-5.964-3.351-.489-.95-.641-3.738-.282-4.813.204-.59.204-.59-.617-.18-.433.231-1.355.485-2.07.563-1.18.13-1.36.258-2.535 1.742-1.664 2.07-4.61 4.864-5.813 5.454-2.558 1.277-3.402.918-4.07-1.72l-.461-1.765-1.102.973c-1.406 1.23-4.222 2.715-5.836 3.074-1.535.332-3.175-.156-3.84-1.18-.995-1.535-.663-4.785.922-9.164 1.176-3.25.333-3.3-2.636-.203-2.203 2.328-3.149 3.992-3.762 6.578-.64 2.688-1.41 3.66-3.148 4.07-1.051.231-1.54-.41-1.332-1.816l.152-1.129-.973.668c-1.383.946-3.125 1.817-4.328 2.149-1.203.332-2.789-.024-3.172-.692-.691-1.175-.691-1.175-1.765-.332-2.332 1.895-5.66 1.356-7.348-1.152l-.54-.793-1.687 1.562c-4.867 4.454-10.957 6.45-15.464 5.067-5.735-1.738-8.907-6.656-8.856-13.746.024-7.117 3.172-14.617 8.473-20.172 2.996-3.125 5.812-4.969 8.68-5.66 2.07-.512 3.328-.485 5.296.129zm0 0"/><path d="M90.418 58.676c-.563.562-.356 2.816.36 4.25.359.742.742 1.332.87 1.332.102 0 .332-.59.512-1.309.64-2.66-.512-5.504-1.742-4.273zm0 0"/></g></svg></span><span class="skill-row__name">Canva</span></span>
+              <span class="skill-row"><span class="skill-row__icon skill-row__icon--svg skill-row__icon--claude"><svg viewBox="0 0 24 24" fill="white" aria-hidden="true"><path d="m4.7144 15.9555 4.7174-2.6471.079-.2307-.079-.1275h-.2307l-.7893-.0486-2.6956-.0729-2.3375-.0971-2.2646-.1214-.5707-.1215-.5343-.7042.0546-.3522.4797-.3218.686.0608 1.5179.1032 2.2767.1578 1.6514.0972 2.4468.255h.3886l.0546-.1579-.1336-.0971-.1032-.0972L6.973 9.8356l-2.55-1.6879-1.3356-.9714-.7225-.4918-.3643-.4614-.1578-1.0078.6557-.7225.8803.0607.2246.0607.8925.686 1.9064 1.4754 2.4893 1.8336.3643.3035.1457-.1032.0182-.0728-.164-.2733-1.3539-2.4467-1.445-2.4893-.6435-1.032-.17-.6194c-.0607-.255-.1032-.4674-.1032-.7285L6.287.1335 6.6997 0l.9957.1336.419.3642.6192 1.4147 1.0018 2.2282 1.5543 3.0296.4553.8985.2429.8318.091.255h.1579v-.1457l.1275-1.706.2368-2.0947.2307-2.6957.0789-.7589.3764-.9107.7468-.4918.5828.2793.4797.686-.0668.4433-.2853 1.8517-.5586 2.9021-.3643 1.9429h.2125l.2429-.2429.9835-1.3053 1.6514-2.0643.7286-.8196.85-.9046.5464-.4311h1.0321l.759 1.1293-.34 1.1657-1.0625 1.3478-.8804 1.1414-1.2628 1.7-.7893 1.36.0729.1093.1882-.0183 2.8535-.607 1.5421-.2794 1.8396-.3157.8318.3886.091.3946-.3278.8075-1.967.4857-2.3072.4614-3.4364.8136-.0425.0304.0486.0607 1.5482.1457.6618.0364h1.621l3.0175.2247.7892.522.4736.6376-.079.4857-1.2142.6193-1.6393-.3886-3.825-.9107-1.3113-.3279h-.1822v.1093l1.0929 1.0686 2.0035 1.8092 2.5075 2.3314.1275.5768-.3218.4554-.34-.0486-2.2039-1.6575-.85-.7468-1.9246-1.621h-.1275v.17l.4432.6496 2.3436 3.5214.1214 1.0807-.17.3521-.6071.2125-.6679-.1214-1.3721-1.9246L14.38 17.959l-1.1414-1.9428-.1397.079-.674 7.2552-.3156.3703-.7286.2793-.6071-.4614-.3218-.7468.3218-1.4753.3886-1.9246.3157-1.53.2853-1.9004.17-.6314-.0121-.0425-.1397.0182-1.4328 1.9672-2.1796 2.9446-1.7243 1.8456-.4128.164-.7164-.3704.0667-.6618.4008-.5889 2.386-3.0357 1.4389-1.882.929-1.0868-.0062-.1579h-.0546l-6.3385 4.1164-1.1293.1457-.4857-.4554.0608-.7467.2307-.2429 1.9064-1.3114Z"/></svg></span><span class="skill-row__name">Claude</span></span>
+              <span class="skill-row"><span class="skill-row__icon skill-row__icon--svg skill-row__icon--gemini"><svg viewBox="0 0 24 24" fill="white" aria-hidden="true"><path d="M11.04 19.32Q12 21.51 12 24q0-2.49.93-4.68.96-2.19 2.58-3.81t3.81-2.55Q21.51 12 24 12q-2.49 0-4.68-.93a12.3 12.3 0 0 1-3.81-2.58 12.3 12.3 0 0 1-2.58-3.81Q12 2.49 12 0q0 2.49-.96 4.68-.93 2.19-2.55 3.81a12.3 12.3 0 0 1-3.81 2.58Q2.49 12 0 12q2.49 0 4.68.96 2.19.93 3.81 2.55t2.55 3.81"/></svg></span><span class="skill-row__name">Gemini</span></span>
+              <span class="skill-row"><span class="skill-row__icon skill-row__icon--svg skill-row__icon--openai"><svg viewBox="0 0 24 24" fill="white" aria-hidden="true"><path d="M22.2819 9.8211a5.9847 5.9847 0 0 0-.5157-4.9108 6.0462 6.0462 0 0 0-6.5098-2.9A6.0651 6.0651 0 0 0 4.9807 4.1818a5.9847 5.9847 0 0 0-3.9977 2.9 6.0462 6.0462 0 0 0 .7427 7.0966 5.98 5.98 0 0 0 .511 4.9107 6.051 6.051 0 0 0 6.5146 2.9001A5.9847 5.9847 0 0 0 13.2599 24a6.0557 6.0557 0 0 0 5.7718-4.2058 5.9894 5.9894 0 0 0 3.9977-2.9001 6.0557 6.0557 0 0 0-.7475-7.0729zm-9.022 12.6081a4.4755 4.4755 0 0 1-2.8764-1.0408l.1419-.0804 4.7783-2.7582a.7948.7948 0 0 0 .3927-.6813v-6.7369l2.02 1.1686a.071.071 0 0 1 .038.052v5.5826a4.504 4.504 0 0 1-4.4945 4.4944zm-9.6607-4.1254a4.4708 4.4708 0 0 1-.5346-3.0137l.142.0852 4.783 2.7582a.7712.7712 0 0 0 .7806 0l5.8428-3.3685v2.3324a.0804.0804 0 0 1-.0332.0615L9.74 19.9502a4.4992 4.4992 0 0 1-6.1408-1.6464zM2.3408 7.8956a4.485 4.485 0 0 1 2.3655-1.9728V11.6a.7664.7664 0 0 0 .3879.6765l5.8144 3.3543-2.0201 1.1685a.0757.0757 0 0 1-.071 0l-4.8303-2.7865A4.504 4.504 0 0 1 2.3408 7.872zm16.5963 3.8558L13.1038 8.364 15.1192 7.2a.0757.0757 0 0 1 .071 0l4.8303 2.7913a4.4944 4.4944 0 0 1-.6765 8.1042v-5.6772a.79.79 0 0 0-.407-.667zm2.0107-3.0231l-.142-.0852-4.7735-2.7818a.7759.7759 0 0 0-.7854 0L9.409 9.2297V6.8974a.0662.0662 0 0 1 .0284-.0615l4.8303-2.7866a4.4992 4.4992 0 0 1 6.6802 4.66zM8.3065 12.863l-2.02-1.1638a.0804.0804 0 0 1-.038-.0567V6.0742a4.4992 4.4992 0 0 1 7.3757-3.4537l-.142.0805L8.704 5.459a.7948.7948 0 0 0-.3927.6813zm1.0976-2.3654l2.602-1.4998 2.6069 1.4998v2.9994l-2.5974 1.4997-2.6067-1.4997Z"/></svg></span><span class="skill-row__name">ChatGPT</span></span>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <div class="social-bar">
+    <a href="https://instagram.com/kadakal_ozgur" target="_blank" rel="noopener noreferrer" class="social-bar__link" aria-label="Instagram">
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <rect x="3" y="3" width="18" height="18" rx="5.5" stroke="currentColor" stroke-width="1.7"/>
+        <circle cx="12" cy="12" r="4.2" stroke="currentColor" stroke-width="1.7"/>
+        <circle cx="17.2" cy="6.8" r="1.1" fill="currentColor"/>
+      </svg>
+    </a>
+    <a href="https://github.com/kadakalozgur" target="_blank" rel="noopener noreferrer" class="social-bar__link" aria-label="GitHub">
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M12 2.2C6.6 2.2 2.2 6.6 2.2 12c0 4.3 2.8 8 6.6 9.3.5.1.7-.2.7-.5v-1.8c-2.7.6-3.3-1.2-3.3-1.2-.4-1.1-1-1.4-1-1.4-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.5 2.3 1.1 2.9.8.1-.6.3-1.1.6-1.3-2.2-.2-4.4-1.1-4.4-4.8 0-1.1.4-1.9 1-2.6-.1-.2-.4-1.2.1-2.5 0 0 .8-.3 2.7 1 .8-.2 1.6-.3 2.5-.3s1.7.1 2.5.3c1.9-1.3 2.7-1 2.7-1 .5 1.3.2 2.3.1 2.5.6.7 1 1.5 1 2.6 0 3.7-2.2 4.6-4.4 4.8.4.3.7.9.7 1.8v2.7c0 .3.2.6.7.5 3.8-1.3 6.6-5 6.6-9.3 0-5.4-4.4-9.8-9.8-9.8Z" fill="currentColor"/>
+      </svg>
+    </a>
+    <a href="mailto:ozgurkreach@gmail.com" class="social-bar__link" aria-label="E-posta">
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <rect x="2.5" y="5" width="19" height="14" rx="2.5" stroke="currentColor" stroke-width="1.7"/>
+        <path d="M3.5 6.5L12 13L20.5 6.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </a>
+  </div>
+
+  <footer class="footer">
+    <p data-i18n="footerText">© Özgür Kadakal - Tüm Hakları Saklıdır.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

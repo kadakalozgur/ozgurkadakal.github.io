@@ -1,0 +1,153 @@
+/* ============================================================
+   PROJELER SAYFASI STİL DOSYASI (projects.html için)
+   Not: Bu dosya style.css'in üzerine eklenir; navbar, footer,
+   tema/dil sistemleri, sosyal ikon çubuğu ve proje kartlarının
+   (.project-card) temel stilleri style.css'ten gelir.
+
+   İçindekiler:
+   1. Sayfa Üst Bilgi (Eyebrow / Başlık / Açıklama)
+   2. Proje Kartları Izgarası
+   3. Responsive (Medya Sorguları)
+   4. Açılış Animasyonu (Sıralı Ortaya Çıkış)
+   ============================================================ */
+
+
+/* ============================================================
+   1. SAYFA ÜST BİLGİ
+   ============================================================ */
+.projects-page {
+  padding-top: 96px;
+  padding-bottom: 56px;
+}
+
+.projects-page__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.projects-page__intro {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 620px;
+  margin-bottom: 56px;
+}
+
+.projects-page__intro .eyebrow {
+  margin-bottom: 16px;
+}
+
+.projects-page__intro .section__title {
+  margin-bottom: 18px;
+}
+
+.projects-page__text {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  max-width: 560px;
+}
+
+
+/* ============================================================
+   2. PROJE KARTLARI IZGARASI
+   ============================================================ */
+.project-card__image--placeholder img {
+  object-fit: contain;
+  padding: 48px;
+  opacity: 0.6;
+}
+
+.projects-page__grid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 32px;
+  text-align: left;
+}
+
+
+/* ============================================================
+   3. RESPONSIVE (MEDYA SORGULARI)
+   ============================================================ */
+@media (max-width: 900px) {
+  .projects-page__grid {
+    grid-template-columns: 1fr;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .projects-page {
+    padding-top: 64px;
+    padding-bottom: 40px;
+  }
+
+  .projects-page__intro {
+    margin-bottom: 40px;
+  }
+}
+
+
+/* ============================================================
+   4. AÇILIŞ ANİMASYONU (SIRALI ORTAYA ÇIKIŞ)
+   ============================================================ */
+.projects-reveal {
+  opacity: 0;
+}
+
+.projects-page__intro > .projects-reveal {
+  animation: projectsRevealDown 0.7s cubic-bezier(0.25, 0.7, 0.35, 1) forwards;
+}
+
+.projects-page__intro > .projects-reveal:nth-child(1) { animation-delay: 0.05s; }
+.projects-page__intro > .projects-reveal:nth-child(2) { animation-delay: 0.2s; }
+.projects-page__intro > .projects-reveal:nth-child(3) { animation-delay: 0.35s; }
+
+.projects-page__grid > .projects-reveal {
+  animation: projectsRevealUp 0.7s cubic-bezier(0.25, 0.7, 0.35, 1) forwards;
+}
+
+.projects-page__grid > .projects-reveal:nth-child(1) { animation-delay: 0.5s; }
+.projects-page__grid > .projects-reveal:nth-child(2) { animation-delay: 0.58s; }
+.projects-page__grid > .projects-reveal:nth-child(3) { animation-delay: 0.66s; }
+.projects-page__grid > .projects-reveal:nth-child(4) { animation-delay: 0.74s; }
+.projects-page__grid > .projects-reveal:nth-child(5) { animation-delay: 0.82s; }
+.projects-page__grid > .projects-reveal:nth-child(6) { animation-delay: 0.9s; }
+.projects-page__grid > .projects-reveal:nth-child(7) { animation-delay: 0.98s; }
+.projects-page__grid > .projects-reveal:nth-child(8) { animation-delay: 1.06s; }
+.projects-page__grid > .projects-reveal:nth-child(9) { animation-delay: 1.14s; }
+.projects-page__grid > .projects-reveal:nth-child(10) { animation-delay: 1.22s; }
+.projects-page__grid > .projects-reveal:nth-child(11) { animation-delay: 1.3s; }
+.projects-page__grid > .projects-reveal:nth-child(12) { animation-delay: 1.38s; }
+.projects-page__grid > .projects-reveal:nth-child(13) { animation-delay: 1.46s; }
+
+@keyframes projectsRevealDown {
+  from {
+    opacity: 0;
+    translate: 0 -22px;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+
+@keyframes projectsRevealUp {
+  from {
+    opacity: 0;
+    translate: 0 26px;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .projects-page .projects-reveal {
+    animation-delay: 0s !important;
+  }
+}
