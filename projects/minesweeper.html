@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Minesweeper - Özgür Kadakal</title>
+
+  <script>
+    (function () {
+      var root = document.documentElement;
+
+      if ('scrollRestoration' in history) {
+        history.scrollRestoration = 'manual';
+      }
+      window.scrollTo(0, 0);
+
+      try {
+        var theme = localStorage.getItem('portfolio-theme');
+        if (!theme) {
+          theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+        if (theme === 'dark') {
+          root.setAttribute('data-theme', 'dark');
+        }
+      } catch (e) {}
+
+      try {
+        var lang = localStorage.getItem('portfolio-lang');
+        if (!lang) {
+          var browserLang = (navigator.language || 'tr').slice(0, 2);
+          lang = browserLang === 'en' ? 'en' : 'tr';
+        }
+        if (lang !== 'tr') {
+          root.classList.add('lang-not-ready');
+        }
+        root.classList.add('pref-lang-' + lang);
+      } catch (e) {}
+    })();
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="../style.css" />
+  <link rel="stylesheet" href="project2.css" />
+</head>
+<body>
+
+  <canvas class="cursor-trail-canvas" id="cursorTrailCanvas" aria-hidden="true"></canvas>
+
+  <header class="navbar" id="navbar">
+    <div class="navbar__inner">
+
+      <a href="../index.html" class="navbar__logo">
+        <span class="navbar__logo-bracket">&lt;</span>
+        <span data-i18n="navLogo">Özgür Kadakal</span>
+        <span class="navbar__logo-bracket">/&gt;</span>
+      </a>
+
+      <nav class="navbar__links" id="navLinks">
+        <a href="../index.html" data-i18n="navHome">Ana Sayfa</a>
+        <a href="../projects.html" data-i18n="navProjects">Projeler</a>
+        <a href="../about.html" data-i18n="navAbout">Hakkımda</a>
+        <a href="../contact.html" data-i18n="navContact">İletişim</a>
+      </nav>
+
+      <div class="navbar__actions">
+
+        <div class="lang-switch" id="langSwitch" role="group" aria-label="Dil seçimi">
+          <button class="lang-switch__btn" data-lang="tr" aria-label="Türkçe" title="Türkçe">
+            <svg viewBox="0 0 32 32" class="flag-icon" aria-hidden="true">
+              <rect width="32" height="32" rx="4" fill="#E30A17"/>
+              <circle cx="13" cy="16" r="6.2" fill="#fff"/>
+              <circle cx="14.6" cy="16" r="5" fill="#E30A17"/>
+              <polygon fill="#fff" points="20.5,16 23.8,17.1 21.7,14.3 21.7,17.7 23.8,14.9"/>
+            </svg>
+          </button>
+          <button class="lang-switch__btn" data-lang="en" aria-label="English" title="English">
+            <svg viewBox="0 0 32 32" class="flag-icon" aria-hidden="true">
+              <rect width="32" height="32" rx="4" fill="#012169"/>
+              <path d="M0 0 L32 32 M32 0 L0 32" stroke="#fff" stroke-width="4"/>
+              <path d="M0 0 L32 32 M32 0 L0 32" stroke="#C8102E" stroke-width="2"/>
+              <path d="M16 0 V32 M0 16 H32" stroke="#fff" stroke-width="6"/>
+              <path d="M16 0 V32 M0 16 H32" stroke="#C8102E" stroke-width="3.2"/>
+            </svg>
+          </button>
+        </div>
+
+        <button class="theme-toggle" id="themeToggle" data-i18n-title="themeToggleTitle" aria-label="Temayı değiştir" title="Tema">
+          <svg class="theme-toggle__icon theme-toggle__icon--sun" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <circle cx="12" cy="12" r="4.2" stroke="currentColor" stroke-width="1.8"/>
+            <g stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+              <line x1="12" y1="1.5" x2="12" y2="4"/>
+              <line x1="12" y1="20" x2="12" y2="22.5"/>
+              <line x1="1.5" y1="12" x2="4" y2="12"/>
+              <line x1="20" y1="12" x2="22.5" y2="12"/>
+              <line x1="4.4" y1="4.4" x2="6.1" y2="6.1"/>
+              <line x1="17.9" y1="17.9" x2="19.6" y2="19.6"/>
+              <line x1="4.4" y1="19.6" x2="6.1" y2="17.9"/>
+              <line x1="17.9" y1="6.1" x2="19.6" y2="4.4"/>
+            </g>
+          </svg>
+          <svg class="theme-toggle__icon theme-toggle__icon--moon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+          </svg>
+        </button>
+
+        <div class="settings-menu" id="settingsMenu">
+          <button class="settings-toggle" id="settingsToggle" data-i18n-title="settingsToggleTitle" aria-label="Ayarlar" aria-expanded="false" title="Ayarlar">
+            <svg class="settings-toggle__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Z" stroke="currentColor" stroke-width="1.8"/>
+              <path d="M19.4 13.5c.04-.49.04-.99 0-1.5l1.7-1.32a.6.6 0 0 0 .14-.77l-1.6-2.78a.6.6 0 0 0-.73-.27l-2 .8a7.6 7.6 0 0 0-1.3-.75l-.3-2.13a.6.6 0 0 0-.6-.5h-3.2a.6.6 0 0 0-.6.5l-.3 2.13c-.47.2-.9.45-1.3.75l-2-.8a.6.6 0 0 0-.73.27l-1.6 2.78a.6.6 0 0 0 .14.77l1.7 1.32c-.04.5-.04 1 0 1.5l-1.7 1.32a.6.6 0 0 0-.14.77l1.6 2.78a.6.6 0 0 0 .73.27l2-.8c.4.3.83.55 1.3.75l.3 2.13a.6.6 0 0 0 .6.5h3.2a.6.6 0 0 0 .6-.5l.3-2.13c.47-.2.9-.45 1.3-.75l2 .8a.6.6 0 0 0 .73-.27l1.6-2.78a.6.6 0 0 0-.14-.77l-1.7-1.32Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+            </svg>
+          </button>
+
+          <div class="settings-panel" id="settingsPanel" role="menu">
+            <div class="settings-panel__item settings-panel__item--stacked">
+              <div class="settings-panel__item-text">
+                <span class="settings-panel__item-title" data-i18n="settingsCursorTrail">Fare İzi Efekti</span>
+                <span class="settings-panel__item-desc" data-i18n="settingsCursorTrailDesc">İmlecin arkasındaki efekti seç</span>
+              </div>
+              <div class="trail-options" id="cursorTrailOptions" role="radiogroup" aria-label="Fare izi efekti seçimi">
+                <button type="button" class="trail-options__btn" data-trail-mode="off" role="radio" aria-checked="true" data-i18n="trailModeOff">
+                  Kapalı
+                </button>
+                <button type="button" class="trail-options__btn" data-trail-mode="dots" role="radio" aria-checked="false" data-i18n="trailModeDots">
+                  Nokta İzi
+                </button>
+                <button type="button" class="trail-options__btn" data-trail-mode="line" role="radio" aria-checked="false" data-i18n="trailModeLine">
+                  Çizgi İzi
+                </button>
+              </div>
+            </div>
+            <div class="settings-panel__item settings-panel__item--stacked">
+              <div class="settings-panel__item-text">
+                <span class="settings-panel__item-title" data-i18n="settingsBgAnim">Arka Plan Animasyonu</span>
+                <span class="settings-panel__item-desc" data-i18n="settingsBgAnimDesc">Hareketli arka planı aç veya kapat</span>
+              </div>
+              <button
+                type="button"
+                class="bg-anim-toggle"
+                id="bgAnimToggle"
+                role="switch"
+                aria-checked="true"
+                aria-label="Arka plan animasyonu"
+              >
+                <span class="bg-anim-toggle__track">
+                  <span class="bg-anim-toggle__thumb"></span>
+                </span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <button class="navbar__burger" id="burgerBtn" aria-label="Menüyü aç/kapat" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <section class="section project-detail-page" id="minesweeper">
+      <div class="section__inner project-detail-page__inner">
+
+        <a href="../projects.html" class="project-detail-back project-detail-reveal project-detail-reveal--up" style="animation-delay: 0.05s;">
+          <span aria-hidden="true">←</span> <span data-i18n="minesweeperBackLink">Bütün Projeler</span>
+        </a>
+
+        <div class="project-detail-layout">
+
+          <!-- SOL: GÖRSEL GALERİSİ -->
+          <div class="project-detail-gallery project-detail-reveal project-detail-reveal--left" style="animation-delay: 0.15s;">
+            <div class="project-detail-gallery__main">
+              <img src="../images/mayintarlasi.png" alt="Minesweeper" id="minesweeperMainImage" />
+              <button type="button" class="project-detail-gallery__zoom-hint" id="minesweeperZoomHint" aria-label="Büyüt">
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <circle cx="11" cy="11" r="6.5" stroke="currentColor" stroke-width="1.8"/>
+                  <path d="M20 20L16 16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                  <path d="M11 8.5V13.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+                  <path d="M8.5 11H13.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+                </svg>
+              </button>
+            </div>
+            <div class="project-detail-gallery__thumbs" id="minesweeperThumbs">
+              <button type="button" class="project-detail-gallery__thumb is-active" data-img="../images/mayintarlasi.png" aria-label="Görsel 1">
+                <img src="../images/mayintarlasi.png" alt="" />
+              </button>
+              <button type="button" class="project-detail-gallery__thumb" data-img="../images/mayintarlasigalerisi/1.png" aria-label="Görsel 2">
+                <img src="../images/mayintarlasigalerisi/1.png" alt="" />
+              </button>
+              <button type="button" class="project-detail-gallery__thumb" data-img="../images/mayintarlasigalerisi/2.png" aria-label="Görsel 3">
+                <img src="../images/mayintarlasigalerisi/2.png" alt="" />
+              </button>
+              <button type="button" class="project-detail-gallery__thumb" data-img="../images/mayintarlasigalerisi/3.png" aria-label="Görsel 4">
+                <img src="../images/mayintarlasigalerisi/3.png" alt="" />
+              </button>
+              <button type="button" class="project-detail-gallery__thumb" data-img="../images/mayintarlasigalerisi/4.png" aria-label="Görsel 5">
+                <img src="../images/mayintarlasigalerisi/4.png" alt="" />
+              </button>
+              <button type="button" class="project-detail-gallery__thumb" data-img="../images/mayintarlasigalerisi/5.png" aria-label="Görsel 6">
+                <img src="../images/mayintarlasigalerisi/5.png" alt="" />
+              </button>
+            </div>
+          </div>
+
+          <!-- SAĞ: PROJE BİLGİLERİ -->
+          <div class="project-detail-info">
+
+            <span class="eyebrow project-detail-reveal project-detail-reveal--up" data-i18n="minesweeperEyebrow" style="animation-delay: 0.25s;">// Masaüstü Uygulama Projesi</span>
+            <h1 class="project-detail-info__title project-detail-reveal project-detail-reveal--up" data-i18n="minesweeperTitle" style="animation-delay: 0.32s;">Minesweeper</h1>
+
+            <div class="project-detail-info__stack project-detail-reveal project-detail-reveal--up" style="animation-delay: 0.39s;">
+              <span>C#</span><span>.Net Framework (Windows Forms)</span>
+            </div>
+
+            <div class="project-detail-info__note project-detail-reveal project-detail-reveal--up" style="animation-delay: 0.44s;">
+              <span aria-hidden="true">🎓</span> <span data-i18n="minesweeperNote">Bu proje bir okul projesi olarak geliştirilmiştir.</span>
+            </div>
+
+            <p class="project-detail-info__desc project-detail-reveal project-detail-reveal--up" data-i18n="minesweeperDesc" style="animation-delay: 0.46s;">
+              Klasik mayın tarlası oyununun C# ile geliştirilmiş bir versiyonudur. Oyuncu,
+              mayınlardan kaçınarak tüm güvenli kareleri açmaya çalışır.
+            </p>
+
+            <div class="project-detail-info__section project-detail-reveal project-detail-reveal--up" style="animation-delay: 0.53s;">
+              <h2 class="project-detail-info__heading" data-i18n="minesweeperFeaturesTitle">✨ Özellikler</h2>
+
+              <div class="project-detail-feature-group">
+                <h3 class="project-detail-feature-group__title" data-i18n="minesweeperGroup1Title">🎮 Oyun Mekanikleri</h3>
+                <ul class="project-detail-info__features">
+                  <li><span data-i18n="minesweeperFeat1_1">🎚️ İki Farklı Zorluk Modu: "Kolay" ve "Zor" seçenekleri (Daha büyük harita ve daha fazla mayın).</span></li>
+                  <li><span data-i18n="minesweeperFeat1_2">🚩 Bayrak Sistemi: Mayın olduğundan şüphelendiğiniz kutulara sağ tık ile bayrak koyma ve kaldırma.</span></li>
+                  <li><span data-i18n="minesweeperFeat1_3">⏱️ Canlı Sayaç: Oyunu ne kadar süredir oynadığınızı gösteren anlık saniye sayacı.</span></li>
+                </ul>
+              </div>
+
+              <div class="project-detail-feature-group">
+                <h3 class="project-detail-feature-group__title" data-i18n="minesweeperGroup2Title">🔊 Ses ve Müzik</h3>
+                <ul class="project-detail-info__features">
+                  <li><span data-i18n="minesweeperFeat2_1">🎵 Arka Plan Müziği: Ana menüde çalan atmosferik müzik.</span></li>
+                  <li><span data-i18n="minesweeperFeat2_2">🖱️ Hücre Açma Sesi</span></li>
+                  <li><span data-i18n="minesweeperFeat2_3">🚩 Bayrak Koyma/Kaldırma Sesi</span></li>
+                  <li><span data-i18n="minesweeperFeat2_4">💥 Mayına Basma (Patlama) Sesi</span></li>
+                  <li><span data-i18n="minesweeperFeat2_5">🏆 Oyunu Kazanma Sesi</span></li>
+                </ul>
+              </div>
+
+              <div class="project-detail-feature-group">
+                <h3 class="project-detail-feature-group__title" data-i18n="minesweeperGroup3Title">🖥️ Arayüz ve Kullanıcı Deneyimi</h3>
+                <ul class="project-detail-info__features">
+                  <li><span data-i18n="minesweeperFeat3_1">❓ Yardım Menüsü: Oyun kurallarını ve nasıl oynandığını gösteren özel pencere.</span></li>
+                  <li><span data-i18n="minesweeperFeat3_2">🖱️ Akıcı Arayüz: Etkileşimli kutucuklar ve kullanıcı dostu tasarım.</span></li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="project-detail-info__actions project-detail-reveal project-detail-reveal--up" style="animation-delay: 0.6s;">
+              <a href="https://github.com/kadakalozgur/Minesweeper_Game" target="_blank" rel="noopener noreferrer" class="btn btn--primary project-detail-github-btn">
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M12 2.2C6.6 2.2 2.2 6.6 2.2 12c0 4.3 2.8 8 6.6 9.3.5.1.7-.2.7-.5v-1.8c-2.7.6-3.3-1.2-3.3-1.2-.4-1.1-1-1.4-1-1.4-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.5 2.3 1.1 2.9.8.1-.6.3-1.1.6-1.3-2.2-.2-4.4-1.1-4.4-4.8 0-1.1.4-1.9 1-2.6-.1-.2-.4-1.2.1-2.5 0 0 .8-.3 2.7 1 .8-.2 1.6-.3 2.5-.3s1.7.1 2.5.3c1.9-1.3 2.7-1 2.7-1 .5 1.3.2 2.3.1 2.5.6.7 1 1.5 1 2.6 0 3.7-2.2 4.6-4.4 4.8.4.3.7.9.7 1.8v2.7c0 .3.2.6.7.5 3.8-1.3 6.6-5 6.6-9.3 0-5.4-4.4-9.8-9.8-9.8Z" fill="currentColor"/>
+                </svg>
+                <span data-i18n="minesweeperGithubBtn">GitHub'da Görüntüle</span>
+              </a>
+            </div>
+
+          </div>
+
+        </div>
+
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- GÖRSEL LIGHTBOX (BÜYÜTÜLMÜŞ GÖRÜNTÜLEYİCİ) -->
+  <div class="project-detail-lightbox" id="minesweeperLightbox" role="dialog" aria-modal="true" aria-label="Görsel önizleme" hidden>
+    <button type="button" class="project-detail-lightbox__close" id="minesweeperLightboxClose" aria-label="Kapat">
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M5 5L19 19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <path d="M19 5L5 19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </button>
+
+    <button type="button" class="project-detail-lightbox__nav project-detail-lightbox__nav--prev" id="minesweeperLightboxPrev" aria-label="Önceki görsel">
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M15 4L7 12L15 20" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+
+    <div class="project-detail-lightbox__stage">
+      <img src="" alt="Minesweeper görsel önizleme" id="minesweeperLightboxImage" />
+      <span class="project-detail-lightbox__counter" id="minesweeperLightboxCounter">1 / 6</span>
+    </div>
+
+    <button type="button" class="project-detail-lightbox__nav project-detail-lightbox__nav--next" id="minesweeperLightboxNext" aria-label="Sonraki görsel">
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M9 4L17 12L9 20" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+  </div>
+
+  <div class="social-bar">
+    <a href="https://instagram.com/kadakal_ozgur" target="_blank" rel="noopener noreferrer" class="social-bar__link" aria-label="Instagram">
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <rect x="3" y="3" width="18" height="18" rx="5.5" stroke="currentColor" stroke-width="1.7"/>
+        <circle cx="12" cy="12" r="4.2" stroke="currentColor" stroke-width="1.7"/>
+        <circle cx="17.2" cy="6.8" r="1.1" fill="currentColor"/>
+      </svg>
+    </a>
+    <a href="https://github.com/kadakalozgur" target="_blank" rel="noopener noreferrer" class="social-bar__link" aria-label="GitHub">
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M12 2.2C6.6 2.2 2.2 6.6 2.2 12c0 4.3 2.8 8 6.6 9.3.5.1.7-.2.7-.5v-1.8c-2.7.6-3.3-1.2-3.3-1.2-.4-1.1-1-1.4-1-1.4-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.5 2.3 1.1 2.9.8.1-.6.3-1.1.6-1.3-2.2-.2-4.4-1.1-4.4-4.8 0-1.1.4-1.9 1-2.6-.1-.2-.4-1.2.1-2.5 0 0 .8-.3 2.7 1 .8-.2 1.6-.3 2.5-.3s1.7.1 2.5.3c1.9-1.3 2.7-1 2.7-1 .5 1.3.2 2.3.1 2.5.6.7 1 1.5 1 2.6 0 3.7-2.2 4.6-4.4 4.8.4.3.7.9.7 1.8v2.7c0 .3.2.6.7.5 3.8-1.3 6.6-5 6.6-9.3 0-5.4-4.4-9.8-9.8-9.8Z" fill="currentColor"/>
+      </svg>
+    </a>
+    <a href="mailto:ozgurkreach@gmail.com" class="social-bar__link" aria-label="E-posta">
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <rect x="2.5" y="5" width="19" height="14" rx="2.5" stroke="currentColor" stroke-width="1.7"/>
+        <path d="M3.5 6.5L12 13L20.5 6.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </a>
+  </div>
+
+  <footer class="footer">
+    <p data-i18n="footerText">© Özgür Kadakal - Tüm Hakları Saklıdır.</p>
+  </footer>
+
+  <script src="../script.js"></script>
+
+  <!-- Minesweeper sayfasına özel galeri geçiş ve lightbox scripti -->
+  <script>
+    (function () {
+      var mainImage = document.getElementById('minesweeperMainImage');
+      var thumbs = Array.prototype.slice.call(document.querySelectorAll('.project-detail-gallery__thumb'));
+      var zoomHint = document.getElementById('minesweeperZoomHint');
+      var mainWrapper = document.querySelector('.project-detail-gallery__main');
+
+      // Galerideki tüm görsellerin sıralı listesi (thumbnail sırasıyla aynı)
+      var images = thumbs.map(function (t) { return t.getAttribute('data-img'); });
+      var currentIndex = 0;
+
+      function setActiveThumb(index) {
+        thumbs.forEach(function (t) { t.classList.remove('is-active'); });
+        if (thumbs[index]) thumbs[index].classList.add('is-active');
+      }
+
+      function showImage(index, animate) {
+        if (index < 0 || index >= images.length) return;
+        currentIndex = index;
+        var newSrc = images[index];
+        if (!mainImage) return;
+
+        if (animate === false) {
+          mainImage.src = newSrc;
+        } else {
+          mainImage.style.opacity = '0';
+          window.setTimeout(function () {
+            mainImage.src = newSrc;
+            mainImage.style.opacity = '1';
+          }, 120);
+        }
+
+        setActiveThumb(index);
+      }
+
+      thumbs.forEach(function (thumb, index) {
+        thumb.addEventListener('click', function () {
+          showImage(index);
+        });
+      });
+
+      /* ============================================================
+         LIGHTBOX (BÜYÜTÜLMÜŞ GÖRÜNTÜLEYİCİ)
+         ============================================================ */
+      var lightbox = document.getElementById('minesweeperLightbox');
+      var lightboxImage = document.getElementById('minesweeperLightboxImage');
+      var lightboxCounter = document.getElementById('minesweeperLightboxCounter');
+      var lightboxClose = document.getElementById('minesweeperLightboxClose');
+      var lightboxPrev = document.getElementById('minesweeperLightboxPrev');
+      var lightboxNext = document.getElementById('minesweeperLightboxNext');
+
+      function updateLightboxImage() {
+        if (!lightboxImage) return;
+        lightboxImage.src = images[currentIndex];
+        if (lightboxCounter) {
+          lightboxCounter.textContent = (currentIndex + 1) + ' / ' + images.length;
+        }
+      }
+
+      function openLightbox() {
+        if (!lightbox) return;
+        updateLightboxImage();
+        lightbox.hidden = false;
+        requestAnimationFrame(function () {
+          lightbox.classList.add('is-open');
+        });
+        document.body.classList.add('project-detail-lightbox-open');
+      }
+
+      function closeLightbox() {
+        if (!lightbox) return;
+        lightbox.classList.remove('is-open');
+        document.body.classList.remove('project-detail-lightbox-open');
+        window.setTimeout(function () {
+          lightbox.hidden = true;
+        }, 220);
+      }
+
+      function showNext() {
+        var nextIndex = (currentIndex + 1) % images.length;
+        showImage(nextIndex, false);
+        updateLightboxImage();
+      }
+
+      function showPrev() {
+        var prevIndex = (currentIndex - 1 + images.length) % images.length;
+        showImage(prevIndex, false);
+        updateLightboxImage();
+      }
+
+      // Ana görsele veya büyüteç ikonuna tıklayınca lightbox aç
+      if (mainWrapper) {
+        mainWrapper.addEventListener('click', openLightbox);
+      }
+      if (zoomHint) {
+        zoomHint.addEventListener('click', function (e) {
+          e.stopPropagation();
+          openLightbox();
+        });
+      }
+
+      // Lightbox içindeki görsele tıklayınca kapanmasın (sadece boşluğa/X'e tıklayınca kapansın)
+      if (lightboxImage) {
+        lightboxImage.addEventListener('click', function (e) { e.stopPropagation(); });
+      }
+      if (lightboxClose) {
+        lightboxClose.addEventListener('click', closeLightbox);
+      }
+      if (lightboxPrev) {
+        lightboxPrev.addEventListener('click', function (e) { e.stopPropagation(); showPrev(); });
+      }
+      if (lightboxNext) {
+        lightboxNext.addEventListener('click', function (e) { e.stopPropagation(); showNext(); });
+      }
+      if (lightbox) {
+        // Görselin/butonların dışına (karanlık alana) tıklayınca kapat
+        lightbox.addEventListener('click', function (e) {
+          if (e.target === lightbox || e.target.classList.contains('project-detail-lightbox__stage')) {
+            closeLightbox();
+          }
+        });
+      }
+
+      // Klavye desteği: ESC ile kapat, ok tuşlarıyla gez
+      document.addEventListener('keydown', function (e) {
+        if (!lightbox || lightbox.hidden) return;
+        if (e.key === 'Escape') closeLightbox();
+        if (e.key === 'ArrowRight') showNext();
+        if (e.key === 'ArrowLeft') showPrev();
+      });
+
+      // Mobil için: kaydırma (swipe) ile gezinme
+      var touchStartX = null;
+      if (lightbox) {
+        lightbox.addEventListener('touchstart', function (e) {
+          touchStartX = e.changedTouches[0].clientX;
+        }, { passive: true });
+
+        lightbox.addEventListener('touchend', function (e) {
+          if (touchStartX === null) return;
+          var deltaX = e.changedTouches[0].clientX - touchStartX;
+          if (Math.abs(deltaX) > 40) {
+            if (deltaX < 0) showNext(); else showPrev();
+          }
+          touchStartX = null;
+        }, { passive: true });
+      }
+    })();
+  </script>
+</body>
+</html>

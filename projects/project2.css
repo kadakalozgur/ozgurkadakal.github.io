@@ -1,0 +1,598 @@
+/* ============================================================
+   PROJE DETAY SAYFASI ORTAK STİL DOSYASI
+   (vaultnet.html, pomodoro.html ve benzeri tüm proje detay
+   sayfaları için ORTAK kullanılır)
+
+   Not: Bu dosya style.css'in üzerine eklenir; navbar, footer,
+   tema/dil sistemleri, sosyal ikon çubuğu ve fare izi efekti
+   style.css'ten gelir. Steam mağaza sayfası tarzında; solda
+   görsel galerisi, sağda proje bilgileri bulunur.
+
+   Sınıf önekleri "project-detail-" ile başlar, böylece her yeni
+   proje detay sayfası (ör. yeni-proje.html) bu dosyayı ayrı bir
+   CSS yazmadan doğrudan kullanabilir.
+
+   İçindekiler:
+   1. Sayfa Üst Bilgi (Geri Dön Bağlantısı)
+   2. Genel Yerleşim (İki Sütun)
+   3. Sol Sütun — Görsel Galerisi
+   4. Sağ Sütun — Proje Bilgileri
+   5. Özellikler Listesi
+   6. GitHub Butonu
+   7. Açılış Animasyonu (Sıralı Ortaya Çıkış)
+   8. Lightbox (Büyütülmüş Görüntüleyici)
+   9. Responsive (Medya Sorguları)
+   10. Alt Madde Listesi (İç İçe Özellik Maddeleri)
+   ============================================================ */
+
+
+/* ============================================================
+   1. SAYFA ÜST BİLGİ
+   ============================================================ */
+.project-detail-page {
+  padding-top: 96px;
+  padding-bottom: 72px;
+}
+
+.project-detail-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  margin-bottom: 36px;
+  transition: color var(--transition-theme) var(--transition-theme-ease), transform 0.2s ease;
+}
+
+.project-detail-back:hover {
+  color: var(--accent);
+  transform: translateX(-3px);
+}
+
+
+/* ============================================================
+   2. GENEL YERLEŞİM (İKİ SÜTUN)
+   ============================================================ */
+.project-detail-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  gap: 48px;
+  align-items: start;
+}
+
+
+/* ============================================================
+   3. SOL SÜTUN — GÖRSEL GALERİSİ
+   ============================================================ */
+.project-detail-gallery {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  position: sticky;
+  top: 100px;
+}
+
+.project-detail-gallery__main {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background-color: var(--surface-3);
+  border: 1px solid var(--border-strong);
+  box-shadow: var(--shadow-md);
+  cursor: zoom-in;
+}
+
+.project-detail-gallery__main img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: opacity 0.15s ease;
+}
+
+.project-detail-gallery__zoom-hint {
+  position: absolute;
+  bottom: 14px;
+  right: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: none;
+  background-color: color-mix(in srgb, black 55%, transparent);
+  color: #fff;
+  cursor: zoom-in;
+  opacity: 0.85;
+  transition: opacity 0.2s ease, transform 0.2s ease, background-color 0.2s ease;
+}
+
+.project-detail-gallery__zoom-hint svg {
+  width: 18px;
+  height: 18px;
+}
+
+.project-detail-gallery__main:hover .project-detail-gallery__zoom-hint {
+  opacity: 1;
+  transform: scale(1.05);
+}
+
+.project-detail-gallery__zoom-hint:hover {
+  background-color: color-mix(in srgb, black 75%, transparent);
+}
+
+.project-detail-gallery__thumbs {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.project-detail-gallery__thumb {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  padding: 0;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  background-color: var(--surface-3);
+  border: 2px solid var(--border);
+  cursor: pointer;
+  opacity: 0.65;
+  transition:
+    opacity 0.2s ease,
+    border-color var(--transition-theme) var(--transition-theme-ease),
+    transform 0.2s ease;
+}
+
+.project-detail-gallery__thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.project-detail-gallery__thumb:hover {
+  opacity: 1;
+  transform: translateY(-2px);
+}
+
+.project-detail-gallery__thumb.is-active {
+  opacity: 1;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px var(--accent-ring);
+}
+
+
+/* ============================================================
+   4. SAĞ SÜTUN — PROJE BİLGİLERİ
+   ============================================================ */
+.project-detail-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.project-detail-info__title {
+  font-family: var(--font-display);
+  font-size: clamp(1.7rem, 2.6vw, 2.2rem);
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+  margin-bottom: 18px;
+}
+
+.project-detail-info__stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.project-detail-info__stack span {
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--accent);
+  background-color: color-mix(in srgb, var(--accent) 12%, transparent);
+  padding: 5px 12px;
+  border-radius: 6px;
+}
+
+.project-detail-info__desc {
+  color: var(--text-secondary);
+  font-size: 1rem;
+  line-height: 1.7;
+  margin-bottom: 32px;
+  padding-bottom: 32px;
+  border-bottom: 1px solid var(--border);
+}
+
+
+/* ============================================================
+   5. ÖZELLİKLER LİSTESİ
+   ============================================================ */
+.project-detail-info__section {
+  margin-bottom: 36px;
+}
+
+.project-detail-info__heading {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 18px;
+}
+
+.project-detail-info__features {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.project-detail-info__features li {
+  color: var(--text-secondary);
+  font-size: 0.94rem;
+  line-height: 1.55;
+}
+
+.project-detail-feature-group {
+  margin-bottom: 22px;
+}
+
+.project-detail-feature-group:last-child {
+  margin-bottom: 0;
+}
+
+.project-detail-feature-group__title {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 12px;
+}
+
+
+/* ============================================================
+   6. GITHUB BUTONU
+   ============================================================ */
+.project-detail-info__actions {
+  margin-top: auto;
+}
+
+.project-detail-github-btn {
+  width: 100%;
+  justify-content: center;
+  padding: 15px 26px;
+  font-size: 1rem;
+}
+
+.project-detail-github-btn svg {
+  width: 19px;
+  height: 19px;
+}
+
+
+/* ============================================================
+   7. AÇILIŞ ANİMASYONU (SIRALI ORTAYA ÇIKIŞ)
+   ============================================================ */
+.project-detail-reveal {
+  opacity: 0;
+  animation-duration: 0.7s;
+  animation-timing-function: cubic-bezier(0.25, 0.7, 0.35, 1);
+  animation-fill-mode: forwards;
+}
+
+.project-detail-reveal--up {
+  animation-name: projectDetailRevealUp;
+}
+
+.project-detail-reveal--left {
+  animation-name: projectDetailRevealLeft;
+}
+
+@keyframes projectDetailRevealUp {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes projectDetailRevealLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-26px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .project-detail-reveal {
+    animation-delay: 0s !important;
+    animation-duration: 0.3s !important;
+  }
+}
+
+
+/* ============================================================
+   8. LIGHTBOX (BÜYÜTÜLMÜŞ GÖRÜNTÜLEYİCİ)
+   ============================================================ */
+.project-detail-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.9);
+  opacity: 0;
+  transition: opacity 0.22s ease;
+}
+
+.project-detail-lightbox[hidden] {
+  display: none;
+}
+
+.project-detail-lightbox.is-open {
+  opacity: 1;
+}
+
+.project-detail-lightbox__stage {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  padding: 72px 88px;
+}
+
+.project-detail-lightbox__stage img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  border-radius: var(--radius-md);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  transform: scale(0.96);
+  transition: transform 0.25s ease;
+}
+
+.project-detail-lightbox.is-open .project-detail-lightbox__stage img {
+  transform: scale(1);
+}
+
+.project-detail-lightbox__counter {
+  position: absolute;
+  bottom: 22px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.85);
+  background-color: rgba(255, 255, 255, 0.08);
+  padding: 5px 14px;
+  border-radius: 999px;
+  pointer-events: none;
+}
+
+.project-detail-lightbox__close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255, 255, 255, 0.25);
+  background-color: rgba(255, 255, 255, 0.06);
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+.project-detail-lightbox__close svg {
+  width: 18px;
+  height: 18px;
+}
+
+.project-detail-lightbox__close:hover {
+  background-color: rgba(255, 255, 255, 0.16);
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.project-detail-lightbox__close:active {
+  transform: scale(0.94);
+}
+
+.project-detail-lightbox__nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255, 255, 255, 0.25);
+  background-color: rgba(255, 255, 255, 0.06);
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+.project-detail-lightbox__nav svg {
+  width: 22px;
+  height: 22px;
+}
+
+.project-detail-lightbox__nav:hover {
+  background-color: rgba(255, 255, 255, 0.16);
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.project-detail-lightbox__nav:active {
+  transform: translateY(-50%) scale(0.94);
+}
+
+.project-detail-lightbox__nav--prev {
+  left: 20px;
+}
+
+.project-detail-lightbox__nav--next {
+  right: 20px;
+}
+
+body.project-detail-lightbox-open {
+  overflow: hidden;
+}
+
+
+/* ============================================================
+   9. RESPONSIVE (MEDYA SORGULARI)
+   ============================================================ */
+@media (max-width: 900px) {
+  .project-detail-layout {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+
+  .project-detail-gallery {
+    position: static;
+  }
+}
+
+@media (max-width: 768px) {
+  .project-detail-page {
+    padding-top: 64px;
+    padding-bottom: 48px;
+  }
+
+  .project-detail-back {
+    margin-bottom: 28px;
+  }
+
+  .project-detail-gallery__thumbs {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+
+  .project-detail-lightbox__stage {
+    padding: 90px 16px;
+  }
+
+  .project-detail-lightbox__nav {
+    width: 42px;
+    height: 42px;
+  }
+
+  .project-detail-lightbox__nav svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .project-detail-lightbox__nav--prev {
+    left: 8px;
+  }
+
+  .project-detail-lightbox__nav--next {
+    right: 8px;
+  }
+
+  .project-detail-lightbox__close {
+    top: 14px;
+    right: 14px;
+    width: 38px;
+    height: 38px;
+  }
+}
+
+@media (max-width: 480px) {
+  .project-detail-info__title {
+    font-size: 1.5rem;
+  }
+
+  .project-detail-lightbox__stage {
+    padding: 80px 10px;
+  }
+
+  .project-detail-lightbox__nav {
+    width: 36px;
+    height: 36px;
+  }
+
+  .project-detail-lightbox__counter {
+    bottom: 14px;
+    font-size: 0.75rem;
+  }
+}
+
+/* ============================================================
+   10. ALT MADDE LİSTESİ (İç İçe Özellik Maddeleri)
+   Not: Tema renkleri, ayar detayları gibi alt kırılım gerektiren
+   özellik satırları için (ör. pomodoro.html).
+   ============================================================ */
+.project-detail-info__features li > ul {
+  list-style: none;
+  margin: 8px 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.project-detail-info__features li > ul > li {
+  position: relative;
+  padding-left: 18px;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.project-detail-info__features li > ul > li::before {
+  content: '';
+  position: absolute;
+  left: 2px;
+  top: 0.65em;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background-color: var(--accent);
+  opacity: 0.7;
+}
+
+
+/* ============================================================
+   11. PROJE NOTU (BİLGİ ROZETİ)
+   Not: Okul projesi, staj projesi vb. ek bilgi notları için
+   (ör. minesweeper.html).
+   ============================================================ */
+.project-detail-info__note {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  background-color: color-mix(in srgb, var(--accent) 8%, transparent);
+  border: 1px solid var(--border);
+  padding: 8px 16px;
+  border-radius: 999px;
+  margin-bottom: 28px;
+}
