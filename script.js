@@ -115,6 +115,10 @@
       projList13Tag: 'Windows Masaüstü Oyunu',
       projList13Desc: 'Bu uygulama C# ile yapılmış, düşen bombalardan kaçınma temalı basit bir oyundur. (Ayrıca bu benim ilk C# projem bu yüzden çok temel düzeydedir.)',
 
+      projList14Title: 'DigitalWallet - Digital Wallet API',
+      projList14Tag: 'Backend API Projesi',
+      projList14Desc: 'DigitalWallet, ASP.NET Core Web API ile geliştirilmiş güvenli bir dijital cüzdan backend projesidir.',
+
       footerText: '© Özgür Kadakal - Tüm Hakları Saklıdır.',
 
       themeToggleTitle: 'Tema',
@@ -229,6 +233,38 @@
       vaultnetFeat4_5: '⚡ Async Programlama',
 
       vaultnetGithubBtn: 'GitHub\'da Görüntüle',
+
+      digitalwalletapiBackLink: 'Bütün Projeler',
+      digitalwalletapiEyebrow: '// Backend API Projesi',
+      digitalwalletapiTitle: 'DigitalWallet - Digital Wallet API',
+      digitalwalletapiDesc: 'DigitalWallet, ASP.NET Core Web API ile geliştirilmiş güvenli bir dijital cüzdan backend projesidir. JWT kimlik doğrulama, güvenli finansal işlem yönetimi ve katmanlı mimari gibi modern backend geliştirme yaklaşımlarını içerir.',
+      digitalwalletapiFeaturesTitle: '✨ Özellikler',
+
+      digitalwalletapiGroup1Title: '🔐 Kimlik Doğrulama ve Güvenlik',
+      digitalwalletapiFeat1_1: '🛡️ JWT Authentication: Token tabanlı güvenli kimlik doğrulama.',
+      digitalwalletapiFeat1_2: '🔑 BCrypt: Şifreler BCrypt algoritması ile hashlenerek saklanır.',
+      digitalwalletapiFeat1_3: '🔒 KVKK Veri Koruması: TC Kimlik Numaraları gibi hassas bilgiler loglarda maskelenir.',
+
+      digitalwalletapiGroup2Title: '💰 Cüzdan İşlemleri',
+      digitalwalletapiFeat2_1: '💵 Bakiye Sorgulama: Güncel cüzdan bakiyesi görüntülenebilir.',
+      digitalwalletapiFeat2_2: '📥 Para Yatırma: Güvenli şekilde bakiye yükleme.',
+      digitalwalletapiFeat2_3: '📤 Para Çekme: Bakiye kontrolü yapılarak para çekilebilir.',
+      digitalwalletapiFeat2_4: '💸 Para Transferi: TC Kimlik Numarası ile kullanıcılar arasında para transferi.',
+      digitalwalletapiFeat2_5: '🔄 Idempotency: Aynı isteğin tekrar gönderilmesi durumunda mükerrer para transferlerini önler.',
+      digitalwalletapiFeat2_6: '📜 İşlem Geçmişi: Sayfalama destekli (PageNumber, PageSize) işlem geçmişi.',
+
+      digitalwalletapiGroup3Title: '🛡️ Sistem Koruması',
+      digitalwalletapiFeat3_1: '⚡ Rate Limiting: Sliding Window algoritmasıyla brute force ve DDoS saldırılarına karşı koruma sağlanır (limit aşılırsa 429 Too Many Requests).',
+      digitalwalletapiFeat3_2: '📝 Yapısal Loglama: Serilog ile giriş denemeleri, para transferleri, para yatırma/çekme ve güvenlik uyarıları günlük dosyalarına kaydedilir.',
+
+      digitalwalletapiGroup4Title: '⚙️ Backend Mimarisi',
+      digitalwalletapiFeat4_1: '🧩 Katmanlı Mimari: Controller → Service → Repository → Database.',
+      digitalwalletapiFeat4_2: '🔄 Dependency Injection',
+      digitalwalletapiFeat4_3: '🗄️ Entity Framework Core',
+      digitalwalletapiFeat4_4: '🌐 Global Exception Handling',
+      digitalwalletapiFeat4_5: '⚡ Async Programlama',
+
+      digitalwalletapiGithubBtn: 'GitHub\'da Görüntüle',
 
       attackgameBackLink: 'Bütün Projeler',
       attackgameEyebrow: '// Oyun Geliştirme Projesi',
@@ -593,6 +629,10 @@
       projList13Tag: 'Windows Desktop Game',
       projList13Desc: 'This application is a simple game made in C# based on avoiding falling bombs. (Also, this is my first C# project, so it\'s at a very basic level.)',
 
+      projList14Title: 'DigitalWallet - Digital Wallet API',
+      projList14Tag: 'Backend API Project',
+      projList14Desc: 'DigitalWallet is a secure digital wallet backend project built with ASP.NET Core Web API.',
+
       footerText: '© Özgür Kadakal - All Rights Reserved.',
 
       themeToggleTitle: 'Theme',
@@ -707,6 +747,38 @@
       vaultnetFeat4_5: '⚡ Async Programming',
 
       vaultnetGithubBtn: 'View on GitHub',
+
+      digitalwalletapiBackLink: 'All Projects',
+      digitalwalletapiEyebrow: '// Backend API Project',
+      digitalwalletapiTitle: 'DigitalWallet - Digital Wallet API',
+      digitalwalletapiDesc: 'DigitalWallet is a secure digital wallet backend project built with ASP.NET Core Web API. It incorporates modern backend development practices such as JWT authentication, secure financial transaction management, and a layered architecture.',
+      digitalwalletapiFeaturesTitle: '✨ Features',
+
+      digitalwalletapiGroup1Title: '🔐 Authentication & Security',
+      digitalwalletapiFeat1_1: '🛡️ JWT Authentication: Secure token-based authentication.',
+      digitalwalletapiFeat1_2: '🔑 BCrypt: Passwords are hashed and stored using the BCrypt algorithm.',
+      digitalwalletapiFeat1_3: '🔒 Data Protection: Sensitive information such as national ID numbers is masked in logs.',
+
+      digitalwalletapiGroup2Title: '💰 Wallet Operations',
+      digitalwalletapiFeat2_1: '💵 Balance Inquiry: View the current wallet balance.',
+      digitalwalletapiFeat2_2: '📥 Deposit: Securely top up the balance.',
+      digitalwalletapiFeat2_3: '📤 Withdrawal: Withdraw funds with balance validation.',
+      digitalwalletapiFeat2_4: '💸 Money Transfer: Transfer money between users via national ID number.',
+      digitalwalletapiFeat2_5: '🔄 Idempotency: Prevents duplicate transfers if the same request is sent again.',
+      digitalwalletapiFeat2_6: '📜 Transaction History: Paginated transaction history (PageNumber, PageSize).',
+
+      digitalwalletapiGroup3Title: '🛡️ System Protection',
+      digitalwalletapiFeat3_1: '⚡ Rate Limiting: A Sliding Window algorithm protects against brute force and DDoS attacks (returns 429 Too Many Requests if the limit is exceeded).',
+      digitalwalletapiFeat3_2: '📝 Structured Logging: Serilog logs login attempts, transfers, deposits, withdrawals, and security alerts.',
+
+      digitalwalletapiGroup4Title: '⚙️ Backend Architecture',
+      digitalwalletapiFeat4_1: '🧩 Layered Architecture: Controller → Service → Repository → Database.',
+      digitalwalletapiFeat4_2: '🔄 Dependency Injection',
+      digitalwalletapiFeat4_3: '🗄️ Entity Framework Core',
+      digitalwalletapiFeat4_4: '🌐 Global Exception Handling',
+      digitalwalletapiFeat4_5: '⚡ Async Programming',
+
+      digitalwalletapiGithubBtn: 'View on GitHub',
 
       attackgameBackLink: 'All Projects',
       attackgameEyebrow: '// Game Development Project',
@@ -1164,6 +1236,7 @@
     // böylece detay sayfasındayken de "Projeler" linki aktif görünür.
     const navActiveOverrides = {
       'vaultnet.html': 'projects.html',
+      'digitalwalletapi.html': 'projects.html',
       'attackgame.html': 'projects.html',
       'cardrivegame.html': 'projects.html',
       'runninggame.html': 'projects.html',
