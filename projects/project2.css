@@ -96,6 +96,11 @@
   transition: opacity 0.15s ease;
 }
 
+.project-detail-gallery--top-align .project-detail-gallery__main img,
+.project-detail-gallery--top-align .project-detail-gallery__thumb img {
+  object-position: left top;
+}
+
 .project-detail-gallery__zoom-hint {
   position: absolute;
   bottom: 14px;
