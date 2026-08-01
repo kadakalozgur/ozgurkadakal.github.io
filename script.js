@@ -131,9 +131,9 @@
       trailModeDots: 'Nokta İzi',
       trailModeLine: 'Çizgi İzi',
 
-      statProjects: '13',
+      statProjects: '14',
       statProjectsLabel: 'Toplam Proje',
-      statTech: '250+',
+      statTech: '500+',
       statTechLabel: 'Toplam Commit',
       statYears: '2+',
       statYearsLabel: 'Yıllık Deneyim',
@@ -645,9 +645,9 @@
       trailModeDots: 'Dot Trail',
       trailModeLine: 'Line Trail',
 
-      statProjects: '13',
+      statProjects: '14',
       statProjectsLabel: 'Total Projects',
-      statTech: '250+',
+      statTech: '500+',
       statTechLabel: 'Total Commits',
       statYears: '2+',
       statYearsLabel: 'Years of Experience',
