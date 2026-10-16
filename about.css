@@ -594,6 +594,10 @@ main.main--fit-content {
 .skill-row__icon--docker   { background-color: #2496ED; color: #ffffff; }
 .skill-row__icon--figma    { background-color: var(--surface-3); }
 .skill-row__icon--postgresql{ background-color: #336791; color: #ffffff; }
+.skill-row__icon--azure   { background-color: #0078D4; color: #ffffff; }
+.skill-row__icon--vercel  { background-color: #000000; color: #ffffff; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.22); }
+.skill-row__icon--unity   { background-color: #222c37; color: #ffffff; }
+.skill-row__icon--js      { background-color: #F7DF1E; color: #000000; }
 
 
 /* ============================================================
