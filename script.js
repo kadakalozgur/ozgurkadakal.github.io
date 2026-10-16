@@ -134,7 +134,7 @@
       trailModeDots: 'Nokta İzi',
       trailModeLine: 'Çizgi İzi',
 
-      statProjects: '14',
+      statProjects: '15',
       statProjectsLabel: 'Toplam Proje',
       statTech: '500+',
       statTechLabel: 'Toplam Commit',
@@ -682,7 +682,7 @@
       trailModeDots: 'Dot Trail',
       trailModeLine: 'Line Trail',
 
-      statProjects: '14',
+      statProjects: '15',
       statProjectsLabel: 'Total Projects',
       statTech: '500+',
       statTechLabel: 'Total Commits',
