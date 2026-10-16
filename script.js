@@ -415,6 +415,37 @@
 
       pomodoroGithubBtn: 'GitHub\'da Görüntüle',
 
+      vaultnetv2BackLink: 'Bütün Projeler',
+      vaultnetv2Eyebrow: '// Full-Stack Web Projesi',
+      vaultnetv2Title: 'VaultNet-v2',
+      vaultnetv2Desc: 'Bu proje C# ve JavaScript dillerinde kodlanmış full-stack bir şifre yöneticisi uygulamasıdır.',
+      vaultnetv2FeaturesTitle: '✨ Özellikler',
+
+      vaultnetv2Group1Title: '🔐 Hesap ve Oturum Yönetimi',
+      vaultnetv2Feat1_1: '📝 Güvenli Kayıt ve Giriş: Email normalizasyonu, benzersiz email kontrolü ve BCrypt ile şifre hash’leme.',
+      vaultnetv2Feat1_2: '🍪 Sıkılaştırılmış Cookie Kimlik Doğrulaması: HttpOnly, Secure ve SameSite=Strict bayraklarına sahip çerezlerde saklanan kısa ömürlü Access Token (5 dk) ve Refresh Token (30 dk) yapısı.',
+      vaultnetv2Feat1_3: '🔄 Refresh Token Rotation: Her oturum yenilemesinde eski refresh token iptal edilir ve tamamen yeni bir token çifti üretilir.',
+      vaultnetv2Feat1_4: '🚨 Token Yeniden Kullanım Tespiti: İptal edilmiş veya daha önce kullanılmış bir refresh token tekrar gönderilirse (token çalınma şüphesi), sistem ilgili kullanıcının tüm cihazlardaki aktif oturumlarını anında sonlandırır.',
+      vaultnetv2Feat1_5: '⚡ Arka Planda Otomatik Oturum Yenileme: Arayüzde aynı anda birden fazla 401 Unauthorized hatası alındığında istekler kuyruğa alınır ve sunucuya yalnızca tek bir refresh isteği atılarak oturum kesintisiz yenilenir.',
+      vaultnetv2Feat1_6: '🛡️ SecurityStamp Doğrulaması: Şifre/email değiştirildiğinde veya "Tüm cihazlardan çıkış yap" denildiğinde kullanıcının SecurityStamp değeri güncellenir ve mevcut Access Token\'lar 5 dakikalık süresinin dolması beklenmeden anında geçersiz kılınır.',
+      vaultnetv2Feat1_7: '📱 Çoklu Cihaz Desteği: Cihaz başına ayrı refresh token takibi, tekil çıkış veya tüm cihazlardan aynı anda çıkış yapabilme.',
+
+      vaultnetv2Group2Title: '🗄️ Şifre Kasası (Vault) ve Kategoriler',
+      vaultnetv2Feat2_1: '🔑 Tam Kapsamlı CRUD İşlemleri: Kasa öğesi (Başlık, Kullanıcı Adı/Email, Şifre, Web Sitesi, Kategori) ekleme, görüntüleme, düzenleme ve silme.',
+      vaultnetv2Feat2_2: '🔒 Veritabanında Şifreli Saklama: Tüm hassas alanlar (Başlıklar, Kullanıcı Adları, Şifreler, Web Siteleri ve Kategori Adları) veritabanına kaydedilmeden önce ASP.NET Core Data Protection ile şifrelenir.',
+      vaultnetv2Feat2_3: '⭐ Favoriler, Arama ve Sayfalama: Öğeleri favorilere ekleme/çıkarma, özel Favoriler sayfası, başlığa göre arama ve sunucu taraflı sabit sayfalama (sayfa başına 6 kayıt).',
+      vaultnetv2Feat2_4: '✨ Kullanıcı Deneyimi Detayları: Şifre göster/gizle butonu, tek tıkla panoya kopyalama ve kayıtlı web siteleri için otomatik favicon gösterimi (geçersiz domainlerde varsayılan ikon desteği).',
+      vaultnetv2Feat2_5: '📂 Transaction Destekli Kategori Yönetimi: Kategori oluşturma, listeleme, arama, sayfalama, yeniden adlandırma ve silme. Bir kategori silindiğinde içindeki kasa öğeleri silinmez; veritabanı transaction güvencesiyle kategorisiz (Uncategorized) duruma geçirilir. Her işlemde kategori sahiplik kontrolü uygulanır.',
+
+      vaultnetv2Group3Title: '📊 Dashboard, Profil ve Şifre Üretici',
+      vaultnetv2Feat3_1: '📈 Anlık İstatistikler (Dashboard): Toplam kayıt sayısı, favori sayısı ve son eklenen 5 öğenin özeti.',
+      vaultnetv2Feat3_2: '🧠 Akıllı Önbellekleme (Caching): Dashboard istatistikleri ve profil bilgileri sessionStorage üzerinde önbelleğe alınır; kasa veya profil üzerinde bir değişiklik yapıldığında önbellek otomatik olarak geçersiz kılınarak avatar ve sayaçların tüm sayfalarda senkron kalması sağlanır.',
+      vaultnetv2Feat3_3: '👤 Profil ve Bulut Avatar Yönetimi: Profil bilgilerini görüntüleme, Supabase Storage üzerinden profil fotoğrafı yükleme/kaldırma, mevcut şifre doğrulamasıyla email/şifre değiştirme ve şifre onayıyla hesabı kalıcı olarak silme (buluttaki profil fotoğrafı dahil tam temizlik).',
+      vaultnetv2Feat3_4: '🎲 Kriptografik Şifre Üretici: Tarayıcının kriptografik rastgelelik üreteci (window.crypto.getRandomValues) kullanılarak uzunluk ve karakter grubu (büyük/küçük harf, rakam, sembol) seçimiyle güvenli şifre üretimi.',
+
+      vaultnetv2LiveBtn: 'Canlı Projeyi Görüntüle',
+      vaultnetv2GithubBtn: 'GitHub\'da Görüntüle',
+
       minesweeperBackLink: 'Bütün Projeler',
       minesweeperEyebrow: '// Masaüstü Uygulama Projesi',
       minesweeperTitle: 'Minesweeper',
@@ -932,6 +963,37 @@
 
       pomodoroGithubBtn: 'View on GitHub',
 
+      vaultnetv2BackLink: 'All Projects',
+      vaultnetv2Eyebrow: '// Full-Stack Web Project',
+      vaultnetv2Title: 'VaultNet-v2',
+      vaultnetv2Desc: 'This project is a full-stack password manager application coded in C# and JavaScript.',
+      vaultnetv2FeaturesTitle: '✨ Features',
+
+      vaultnetv2Group1Title: '🔐 Account & Session Management',
+      vaultnetv2Feat1_1: '📝 Secure Sign Up & Sign In: Email normalization, unique email validation, and password hashing with BCrypt.',
+      vaultnetv2Feat1_2: '🍪 Hardened Cookie Authentication: Short-lived Access Token (5 min) and Refresh Token (30 min) stored in cookies with the HttpOnly, Secure, and SameSite=Strict flags.',
+      vaultnetv2Feat1_3: '🔄 Refresh Token Rotation: On every session refresh, the old refresh token is revoked and a completely new token pair is generated.',
+      vaultnetv2Feat1_4: '🚨 Token Reuse Detection: If a revoked or previously used refresh token is submitted again (suspected token theft), the system immediately terminates all active sessions of that user on every device.',
+      vaultnetv2Feat1_5: '⚡ Automatic Background Session Refresh: When the UI receives multiple 401 Unauthorized errors at the same time, the requests are queued and only a single refresh request is sent to the server, so the session is renewed seamlessly.',
+      vaultnetv2Feat1_6: '🛡️ SecurityStamp Validation: When the password/email is changed or "Sign out from all devices" is used, the user\'s SecurityStamp is updated and existing Access Tokens are invalidated instantly, without waiting for their 5-minute lifetime to expire.',
+      vaultnetv2Feat1_7: '📱 Multi-Device Support: Separate refresh token tracking per device, with the ability to sign out of a single device or all devices at once.',
+
+      vaultnetv2Group2Title: '🗄️ Password Vault & Categories',
+      vaultnetv2Feat2_1: '🔑 Full CRUD Operations: Add, view, edit, and delete vault items (Title, Username/Email, Password, Website, Category).',
+      vaultnetv2Feat2_2: '🔒 Encrypted Storage in the Database: All sensitive fields (Titles, Usernames, Passwords, Websites, and Category Names) are encrypted with ASP.NET Core Data Protection before being saved to the database.',
+      vaultnetv2Feat2_3: '⭐ Favorites, Search & Pagination: Add/remove items from favorites, a dedicated Favorites page, search by title, and fixed server-side pagination (6 records per page).',
+      vaultnetv2Feat2_4: '✨ User Experience Details: Show/hide password button, one-click copy to clipboard, and automatic favicon display for saved websites (with a default icon for invalid domains).',
+      vaultnetv2Feat2_5: '📂 Transaction-Backed Category Management: Create, list, search, paginate, rename, and delete categories. When a category is deleted, the vault items inside it are not deleted; they are moved to the Uncategorized state under a database transaction guarantee. A category ownership check is applied on every operation.',
+
+      vaultnetv2Group3Title: '📊 Dashboard, Profile & Password Generator',
+      vaultnetv2Feat3_1: '📈 Live Statistics (Dashboard): Total record count, favorites count, and a summary of the 5 most recently added items.',
+      vaultnetv2Feat3_2: '🧠 Smart Caching: Dashboard statistics and profile information are cached in sessionStorage; when a change is made to the vault or profile, the cache is automatically invalidated so that the avatar and counters stay in sync across all pages.',
+      vaultnetv2Feat3_3: '👤 Profile & Cloud Avatar Management: View profile information, upload/remove a profile photo via Supabase Storage, change email/password with current password verification, and permanently delete the account with password confirmation (full cleanup, including the profile photo in the cloud).',
+      vaultnetv2Feat3_4: '🎲 Cryptographic Password Generator: Secure password generation using the browser\'s cryptographic random number generator (window.crypto.getRandomValues), with selectable length and character groups (uppercase/lowercase, digits, symbols).',
+
+      vaultnetv2LiveBtn: 'View Live Project',
+      vaultnetv2GithubBtn: 'View on GitHub',
+
       minesweeperBackLink: 'All Projects',
       minesweeperEyebrow: '// Desktop Application Project',
       minesweeperTitle: 'Minesweeper',
@@ -1252,6 +1314,7 @@
       'dicegame.html': 'projects.html',
       'bombdodgegame.html': 'projects.html',
       'pomodoro.html': 'projects.html',
+      'vaultnetv2.html': 'projects.html',
       'minesweeper.html': 'projects.html',
       'gamelauncher.html': 'projects.html',
       'musicplayer.html': 'projects.html'
