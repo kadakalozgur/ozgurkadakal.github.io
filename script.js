@@ -42,6 +42,9 @@
       project2Tag: 'Windows Masaüstü Uygulaması',
       project2Title: 'Pomodoro App',
       project2Desc: 'Bu uygulama, C# Windows Forms ile geliştirilmiş oyunlaştırılmış bir Pomodoro uygulamasıdır. Kullanıcı, odaklanarak XP kazanır, seviye atlar ve çalışma istatistiklerini takip eder.',
+      featVaultTag: 'Canlı Web Sunucusu',
+      featVaultTitle: 'VaultNet-v2',
+      featVaultDesc: 'Bu proje C# ve JavaScript dillerinde kodlanmış full-stack bir şifre yöneticisi uygulamasıdır.',
       projectLink: 'Detayları gör →',
 
       aboutEyebrow: '// Merhaba!',
@@ -556,6 +559,9 @@
       project2Tag: 'Windows Desktop App',
       project2Title: 'Pomodoro App',
       project2Desc: 'This application is a gamified Pomodoro application developed with C# Windows Forms. The user tracks XP gains, level progression, and progress statistics by focusing on the task.',
+      featVaultTag: 'Live Web Server',
+      featVaultTitle: 'VaultNet-v2',
+      featVaultDesc: 'This project is a full-stack password manager application coded in C# and JavaScript.',
       projectLink: 'View details →',
 
       aboutEyebrow: '// Hello!',
