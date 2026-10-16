@@ -167,7 +167,7 @@
       aboutInfoAgeLabel: 'Yaş',
       aboutInfoAgeValue: '20',
       aboutInfoLocationLabel: 'Konum',
-      aboutInfoLocationValue: 'Türkiye',
+      aboutInfoLocationValue: 'İstanbul / Türkiye',
 
       aboutInterestsTitle: 'İlgi Alanlarım',
       aboutInterest1: 'Seyahat Etmek',
@@ -715,7 +715,7 @@
       aboutInfoAgeLabel: 'Age',
       aboutInfoAgeValue: '20',
       aboutInfoLocationLabel: 'Location',
-      aboutInfoLocationValue: 'Turkey',
+      aboutInfoLocationValue: 'İstanbul / Türkiye',
 
       aboutInterestsTitle: 'My Interests',
       aboutInterest1: 'Traveling',
