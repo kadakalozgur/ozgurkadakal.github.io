@@ -128,6 +128,7 @@
 .projects-page__grid > .projects-reveal:nth-child(12) { animation-delay: 1.38s; }
 .projects-page__grid > .projects-reveal:nth-child(13) { animation-delay: 1.46s; }
 .projects-page__grid > .projects-reveal:nth-child(14) { animation-delay: 1.54s; }
+.projects-page__grid > .projects-reveal:nth-child(15) { animation-delay: 1.62s; }
 
 @keyframes projectsRevealDown {
   from {
