@@ -136,7 +136,7 @@
 
       statProjects: '15',
       statProjectsLabel: 'Toplam Proje',
-      statTech: '500+',
+      statTech: '1K+',
       statTechLabel: 'Toplam Commit',
       statYears: '2+',
       statYearsLabel: 'Yıllık Deneyim',
@@ -684,7 +684,7 @@
 
       statProjects: '15',
       statProjectsLabel: 'Total Projects',
-      statTech: '500+',
+      statTech: '1K+',
       statTechLabel: 'Total Commits',
       statYears: '2+',
       statYearsLabel: 'Years of Experience',
